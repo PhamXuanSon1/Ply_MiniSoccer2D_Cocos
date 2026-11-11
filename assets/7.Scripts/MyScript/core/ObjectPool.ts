@@ -75,7 +75,7 @@ export class ObjectPool extends Component {
             n.setParent(this.container ?? this.node);
         }
 
-        n.layer = this.node.layer;          // xem ghi chú UI_2D ở SceneBuilder
+        n.layer = this.node.layer;
         n.setWorldPosition(worldPos);
         n.active = true;
         return n;

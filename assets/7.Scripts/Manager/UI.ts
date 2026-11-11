@@ -1,7 +1,6 @@
-import { _decorator, Animation, Camera, Color, Component, Director, Enum, EventTouch, Label, misc, Node, ParticleSystem2D, PhysicsSystem, size, Size, Sprite, toDegree, Tween, tween, UITransform, v2, v3, Vec2, Vec3, view, Widget } from 'cc';
+import { _decorator, Animation, Camera, Color, Component, Director, Enum, EventTouch, input, Input, Label, misc, Node, ParticleSystem2D, PhysicsSystem, size, Size, Sprite, toDegree, Tween, tween, UITransform, v2, v3, Vec2, Vec3, view, Widget } from 'cc';
 import { World } from './World';
 import { FxType, Ply_SoundManager } from '../MyScript/ScriptTemplate/Ply_SoundManager';
-import { DreamyInputManager } from '../MyScript/core/DreamyInputManager';
 import { Clock } from './Clock';
 const { ccclass, property } = _decorator;
 
@@ -55,7 +54,16 @@ try{
 
     bindingToStore() {
         // Hết game: chạm bất kỳ đâu cũng mở store
-        DreamyInputManager.endGameTapHandler = () => this.openStore();
+        input.off(Input.EventType.TOUCH_START, this.onEndGameTap, this);
+        input.on(Input.EventType.TOUCH_START, this.onEndGameTap, this);
+    }
+
+    private onEndGameTap() {
+        this.openStore();
+    }
+
+    onDestroy() {
+        input.off(Input.EventType.TOUCH_START, this.onEndGameTap, this);
     }
 
     openStore(...args: any) {
