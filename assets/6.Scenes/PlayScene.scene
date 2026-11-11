@@ -274,7 +274,7 @@
     "_id": "3bE8+tLKxJ4JkvlyuCTrT5"
   },
   {
-    "__type__": "3b26efoaDdDF4aNvUCK8slO",
+    "__type__": "784b8FXN1dNC6eIJmogeNZE",
     "_name": "",
     "_objFlags": 0,
     "__editorExtras__": {},
@@ -283,7 +283,8 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "_id": "82ZQT6d/lK0JUyeBnNDzUg"
+    "_id": "82ZQT6d/lK0JUyeBnNDzUg",
+    "bgm1": null
   },
   {
     "__type__": "cc.Node",
@@ -346,9 +347,6 @@
       "__id__": 3
     },
     "camera": null,
-    "soundmanager": {
-      "__id__": 8
-    },
     "_id": "b1nDk+VM5F14bHB/rnhIUF"
   },
   {

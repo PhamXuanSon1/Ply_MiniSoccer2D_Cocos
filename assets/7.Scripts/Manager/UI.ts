@@ -1,6 +1,6 @@
 import { _decorator, Animation, Camera, Color, Component, Director, Enum, EventTouch, Label, misc, Node, ParticleSystem2D, PhysicsSystem, size, Size, Sprite, toDegree, Tween, tween, UITransform, v2, v3, Vec2, Vec3, view, Widget } from 'cc';
 import { World } from './World';
-import { SoundType } from './SoundManager';
+import { FxType, Ply_SoundManager } from '../MyScript/ScriptTemplate/Ply_SoundManager';
 import { Clock } from './Clock';
 const { ccclass, property } = _decorator;
 
@@ -57,7 +57,7 @@ try{
 
     openStore(...args: any) {
         console.log('openStore');  
-        World.ins.soundmanager.stopAll();      
+        Ply_SoundManager.Ins?.stopAll();      
         World.ins.openStore.redirectToStore();
     }
 
@@ -76,7 +76,7 @@ try{
         this.offHand();
         this.endcard.active = true;
         this.bindingToStore();       
-        World.ins.soundmanager.playSound(SoundType.Fail);    
+        Ply_SoundManager.Ins?.playFail();    
     }
 
 
@@ -86,7 +86,7 @@ try{
         this.offHand();
         this.winCard.active = true;
         this.bindingToStore();  
-        World.ins.soundmanager.playSound(SoundType.Win);      
+        Ply_SoundManager.Ins?.playFx(FxType.LevelWin);      
     }
 
     offHand() {

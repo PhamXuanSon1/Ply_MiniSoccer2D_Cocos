@@ -1,6 +1,5 @@
 import { _decorator, Component, game, Node, PhysicsSystem, Pool} from 'cc';
 import { UI } from './UI';
-import SoundManager, { SoundType } from './SoundManager';
 import { MainCamera } from './MainCamera';
 import { GameController } from '../Tool/GameController';
 const { ccclass, property, executeInEditMode } = _decorator;
@@ -24,9 +23,6 @@ export class World extends Component {
 
     @property(MainCamera)
     camera: MainCamera = null; 
-
-    @property(SoundManager)
-    soundmanager: SoundManager = null; 
 
 
     despawn(node: Node) {

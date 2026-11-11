@@ -1,6 +1,6 @@
 /**
  * ItemController — Quản lý tương tác, kéo thả và ghép item vào vị trí đích (Target).
- * Sử dụng hệ thống âm thanh từ PLY_SoundManager (sm).
+ * Sử dụng hệ thống âm thanh từ Ply_SoundManager.Ins.
  */
 
 import { _decorator, Animation, BoxCollider2D, Collider2D, Component, Enum, EventTouch, Node, ParticleSystem2D, Tween, tween, UITransform, Vec2, Vec3 } from 'cc';
