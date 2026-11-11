@@ -73,7 +73,7 @@ type GameLoad = {
 var loaded = false;
 
 const gameLoad: GameLoad = {
-    gameName: " Crowd Escape: Bus Puzzle ",
+    gameName: " MiniSoccer ",
     font: "Arial",
     customScale: 1.5,
     customHeight: 100,
