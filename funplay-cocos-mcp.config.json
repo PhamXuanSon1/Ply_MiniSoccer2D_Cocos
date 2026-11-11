@@ -1,0 +1,27 @@
+{
+  "host": "127.0.0.1",
+  "port": 24234,
+  "portMode": "project",
+  "clientConfigEntries": {
+    "claude_code": {
+      "serverName": "cocos-ply-minisocc-e12eda",
+      "url": "http://127.0.0.1:24234/mcp/project/e12edaaa8f0a097033529d2a/",
+      "configPath": "C:\\Users\\Admin\\.claude.json",
+      "projectIdentity": "e12edaaa8f0a097033529d2a"
+    }
+  },
+  "toolProfile": "core",
+  "enabledTools": [],
+  "disabledTools": [],
+  "enabledToolCategories": [],
+  "disabledToolCategories": [],
+  "enableSessions": false,
+  "enableConsoleLogging": true,
+  "executeJavascriptSafetyChecks": true,
+  "autostart": true,
+  "maxInteractionLogEntries": 50,
+  "lastClientTargetId": "claude_code",
+  "activeToolProfileName": "",
+  "savedToolProfiles": [],
+  "language": "auto"
+}
