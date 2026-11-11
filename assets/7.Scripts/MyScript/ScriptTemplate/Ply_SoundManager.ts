@@ -17,10 +17,19 @@ export enum FxType {
     LevelLose = 7,
     ClockLast2s = 8,
     CustomerOut = 9,
+    // MiniSoccer
+    Angry = 10,
+    Cry = 11,
+    Hehe = 12,
+    Huh = 13,
+    RoarTiger = 14,
+    Siuu = 15,
+    Confetti = 16,
+    Lose2 = 17,
 }
 Enum(FxType);
 
-const FX_TYPE_COUNT = 10;
+const FX_TYPE_COUNT = 18;
 
 /**
  * Cau hinh du lieu am thanh.
@@ -72,6 +81,31 @@ class FxAudio {
 
     @property({ type: SoundData, tooltip: 'Khach het gio, gian bo di' })
     customerOut: SoundData = new SoundData();
+
+    // ---------------- MiniSoccer ----------------
+    @property({ type: SoundData, tooltip: 'angry.mp3 - Nhan vat tuc gian' })
+    angry: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'cry.mp3 - Khoc (dung khi thua)' })
+    cry: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'hehe.mp3 - Cuoi' })
+    hehe: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'huh.mp3 - Ngac nhien' })
+    huh: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'roar_tiger.mp3 - Ho gam' })
+    roarTiger: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'siuu.mp3 - Siuuu' })
+    siuu: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'confetti.mp3 - Thang (phao giay)' })
+    confetti: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'lose2.mp3 - Thua' })
+    lose2: SoundData = new SoundData();
 }
 
 /** Ten truong trong FxAudio theo tung FxType. */
@@ -86,6 +120,14 @@ const FX_FIELDS: Record<FxType, keyof FxAudio> = {
     [FxType.LevelLose]: 'levelLose',
     [FxType.ClockLast2s]: 'clockLast2s',
     [FxType.CustomerOut]: 'customerOut',
+    [FxType.Angry]: 'angry',
+    [FxType.Cry]: 'cry',
+    [FxType.Hehe]: 'hehe',
+    [FxType.Huh]: 'huh',
+    [FxType.RoarTiger]: 'roarTiger',
+    [FxType.Siuu]: 'siuu',
+    [FxType.Confetti]: 'confetti',
+    [FxType.Lose2]: 'lose2',
 };
 
 /**
