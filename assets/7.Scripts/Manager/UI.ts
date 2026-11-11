@@ -4,7 +4,6 @@ import { PointerController } from './PointerController';
 import { SoundType } from './SoundManager';
 import { Clock } from './Clock';
 import { ipm } from './InputManager';
-import { room } from '../Gameplay/Room';
 const { ccclass, property } = _decorator;
 
 export enum BindUIType {
@@ -46,14 +45,12 @@ export class UI extends Component {
     onLoad() {
         ui = this;
         
-        try {
-            if(window.redirectStore.toString() == "function redirectStore(){window.open(clickTag)}") {
-                this.offButtons.forEach(node => node.active = false);
+try{
+            if(PlayableSDK.channel == "Google") {
+                this.offButtons.forEach(button => { if (button) button.active = false; });
             }
-            
-            
-        } catch (error) {
-            
+        } catch(error){
+
         }
     }
 
