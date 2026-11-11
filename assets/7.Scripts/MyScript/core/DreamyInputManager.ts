@@ -14,9 +14,6 @@
 
 import { _decorator, Component, Node, input, Input, EventTouch, Vec3, Vec2, UITransform, Layers, Collider2D } from 'cc';
 import { EDITOR } from 'cc/env';
-import { ItemGraphic } from '../item/ItemGraphic';
-import { ItemManager } from '../managers/ItemManager';
-import { UIManager } from '../managers/UIManager';
 
 const { ccclass, property, executeInEditMode } = _decorator;
 
@@ -61,8 +58,17 @@ export interface IPinchHandler {
 @executeInEditMode(true)
 export class DreamyInputManager extends Component {
 
-    /** Thay cho UIManager.canInput bên Unity. */
+    /** Tắt/bật toàn bộ input gameplay. */
     static canInput = true;
+
+    /**
+     * Khi được gán (vd lúc hiện endcard), MỌI cú chạm chỉ gọi hàm này (thường là mở store)
+     * và không dispatch cho handler nào khác. Gán null để quay lại bình thường.
+     */
+    static endGameTapHandler: (() => void) | null = null;
+
+    /** Được gọi ở mỗi lần chạm hợp lệ, KHÔNG nuốt sự kiện (vd reset idle timer, first tap). */
+    static anyPointerDownListeners: Array<() => void> = [];
 
     static instance: DreamyInputManager | null = null;
 
@@ -93,11 +99,6 @@ export class DreamyInputManager extends Component {
     // ------------------------------------------------------------ lifecycle
     onLoad() {
         DreamyInputManager.instance = this;
-        if (this.dragLayerRoot) {
-            ItemGraphic.dragLayerRoot = this.dragLayerRoot;
-        } else {
-            ItemGraphic.dragLayerRoot = null;
-        }
     }
 
     /** Kiểm tra xem một Node có Layer hợp lệ để nhận Click/Touch hay không */
@@ -164,10 +165,10 @@ export class DreamyInputManager extends Component {
         // Game đã kết thúc -> MỌI cú chạm đều mở store, không giới hạn số lần.
         // Đặt trước mọi điều kiện khác: sau khi mở store (window.open) quay lại, engine có thể
         // còn giữ touch cũ -> getAllTouches() >= 2 sẽ chặn nhầm nếu để phía dưới.
-        if (UIManager.instance?.isGameEnded) {
+        if (DreamyInputManager.endGameTapHandler) {
             this.cancelCaptor();
             this.activeTouches = 0;
-            UIManager.instance.gotoStore();
+            DreamyInputManager.endGameTapHandler();
             return;
         }
 
@@ -182,10 +183,8 @@ export class DreamyInputManager extends Component {
 
         const worldPos = DreamyInputManager.toWorld(ev);
 
-        // Broadcast: ItemManager cần biết mọi lần chạm (reset idle timer, first-click,
-        // bắn CHALLENGE_STARTED). KHÔNG nuốt sự kiện — bên Unity đây là phần
-        // ItemManager.Update tự poll Input.
-        ItemManager.instance?.onAnyPointerDown();
+        // Broadcast mọi lần chạm cho ai cần biết (reset idle timer, first tap...). KHÔNG nuốt sự kiện.
+        DreamyInputManager.anyPointerDownListeners.forEach((fn) => fn());
 
         const candidates = this.handlers
             .filter((h) => {
