@@ -1,9 +1,7 @@
 import { _decorator, Animation, Camera, Color, Component, Director, Enum, EventTouch, Label, misc, Node, ParticleSystem2D, PhysicsSystem, size, Size, Sprite, toDegree, Tween, tween, UITransform, v2, v3, Vec2, Vec3, view, Widget } from 'cc';
 import { World } from './World';
-import { PointerController } from './PointerController';
 import { SoundType } from './SoundManager';
 import { Clock } from './Clock';
-import { ipm } from './InputManager';
 const { ccclass, property } = _decorator;
 
 export enum BindUIType {
@@ -55,9 +53,6 @@ try{
     }
 
     bindingToStore() {
-        PointerController.ins.unBindingEvent();
-        ipm.offBinding();
-        PointerController.ins.onStore();
     }
 
     openStore(...args: any) {

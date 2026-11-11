@@ -15,7 +15,7 @@ export class Black extends PoolMember {
 
     despawn() {
         this.init();
-        World.ins.poolManager.despawn(this);
+        World.ins.despawn(this.node);
     }
 
     @property([Vec3])

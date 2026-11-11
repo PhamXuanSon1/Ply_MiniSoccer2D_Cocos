@@ -3,8 +3,6 @@ import { UI } from './UI';
 import SoundManager, { SoundType } from './SoundManager';
 import { MainCamera } from './MainCamera';
 import { GameController } from '../Tool/GameController';
-import { PoolManager } from '../Pool/PoolManager';
-import { PoolMember } from '../Pool/PoolMember';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 @ccclass('World')
@@ -24,17 +22,15 @@ export class World extends Component {
     @property(GameController)
     openStore: GameController = null; 
 
-    @property(PoolManager)
-    poolManager: PoolManager = null; 
-
     @property(MainCamera)
     camera: MainCamera = null; 
 
     @property(SoundManager)
     soundmanager: SoundManager = null; 
 
+
     despawn(node: Node) {
-        this.poolManager.despawn(node.getComponent(PoolMember));
+        node.active = false;
     }
     
     onLoad() {
