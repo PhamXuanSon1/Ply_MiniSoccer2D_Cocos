@@ -2,6 +2,7 @@ import { _decorator, Animation, Camera, Color, Component, Director, Enum, EventT
 import { World } from './World';
 import { FxType, Ply_SoundManager } from '../MyScript/ScriptTemplate/Ply_SoundManager';
 import { Clock } from './Clock';
+import { AppLovinAnalytics } from '../Tool/AppLovinAnalytics';
 const { ccclass, property } = _decorator;
 
 export enum BindUIType {
@@ -53,22 +54,32 @@ try{
     }
 
     bindingToStore() {
-        // Hết game: chạm bất kỳ đâu cũng mở store
+        // Hết game: chạm bất kỳ đâu cũng mở store.
+        // input TOUCH_START chỉ bắn với cảm ứng thật; chuột (desktop / ad network review) bắn MOUSE_DOWN.
         input.off(Input.EventType.TOUCH_START, this.onEndGameTap, this);
+        input.off(Input.EventType.MOUSE_DOWN, this.onEndGameTap, this);
         input.on(Input.EventType.TOUCH_START, this.onEndGameTap, this);
+        input.on(Input.EventType.MOUSE_DOWN, this.onEndGameTap, this);
     }
 
+    private lastEndGameTap = 0;
     private onEndGameTap() {
+        // Điện thoại có thể bắn cả touch lẫn mouse giả lập cho cùng 1 lần chạm -> bỏ lần trùng
+        const now = Date.now();
+        if (now - this.lastEndGameTap < 500) return;
+        this.lastEndGameTap = now;
         this.openStore();
     }
 
     onDestroy() {
         input.off(Input.EventType.TOUCH_START, this.onEndGameTap, this);
+        input.off(Input.EventType.MOUSE_DOWN, this.onEndGameTap, this);
     }
 
     openStore(...args: any) {
-        console.log('openStore');  
-        Ply_SoundManager.Ins?.stopAll();      
+        console.log('openStore');
+        AppLovinAnalytics.ctaClicked();
+        Ply_SoundManager.Ins?.stopAll();
         World.ins.openStore.redirectToStore();
     }
 
