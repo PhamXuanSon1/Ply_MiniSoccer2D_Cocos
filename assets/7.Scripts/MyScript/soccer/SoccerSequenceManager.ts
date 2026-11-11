@@ -40,6 +40,9 @@ export class SoccerSequenceManager extends Component implements ISoccerManager {
     @property({ type: Node, tooltip: 'Chữ YOU WIN' })
     winObject: Node | null = null;
 
+    @property({ type: Node, tooltip: 'Hiệu ứng bật cùng lúc hiện chữ YOU WIN (vd pháo hoa). Nên đặt ngoài Gameplay để không bị tắt khi chuyển endcard' })
+    winFx: Node | null = null;
+
     @property({ type: Node, tooltip: 'Chữ YOU LOSE' })
     loseObject: Node | null = null;
 
@@ -86,6 +89,7 @@ export class SoccerSequenceManager extends Component implements ISoccerManager {
         }
         if (this.winObject) this.winObject.active = false;
         if (this.loseObject) this.loseObject.active = false;
+        if (this.winFx) this.winFx.active = false;
         // Endcard chỉ hiện khi thắng: ẩn lúc vào game dù trong scene có lỡ để bật (vd lúc sửa ảnh)
         const endcard = World.ins?.ui?.winCard;
         if (endcard) endcard.active = false;
@@ -154,6 +158,7 @@ export class SoccerSequenceManager extends Component implements ISoccerManager {
 
         if (this.isWin) {
             if (this.winObject) this.winObject.active = true;
+            if (this.winFx) this.winFx.active = true; // bắn pháo hoa cùng lúc chữ YOU WIN
             if (this.loseObject) this.loseObject.active = false;
             Ply_SoundManager.Ins?.playFx(FxType.Confetti);
             AppLovinAnalytics.challengeSolved();
