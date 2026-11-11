@@ -91,13 +91,24 @@ try{
     }
 
 
-    onWin() {
-        if(this.endcard.active || this.winCard.active) return; 
+    /** @param fx âm thanh thắng; truyền null nếu đã phát trước đó (vd MiniSoccer phát lúc hiện chữ Win). */
+    onWin(fx: FxType | null = FxType.LevelWin) {
+        if(this.endcard.active || this.winCard.active) return;
         this.offEnds.forEach(button => button.active = false);
         this.offHand();
         this.winCard.active = true;
-        this.bindingToStore();  
-        Ply_SoundManager.Ins?.playFx(FxType.LevelWin);      
+        this.bindingToStore();
+        if (fx !== null) Ply_SoundManager.Ins?.playFx(fx);
+    }
+
+    /**
+     * Thua nhưng vẫn cho chơi lại (MiniSoccer, giống bản Unity): không hiện endcard,
+     * chỉ bật chế độ chạm bất kỳ đâu cũng mở store. Âm thua do gameplay phát lúc hiện chữ Lose.
+     */
+    onLoseRetry() {
+        if(this.endcard.active || this.winCard.active) return;
+        this.offHand();
+        this.bindingToStore();
     }
 
     offHand() {
