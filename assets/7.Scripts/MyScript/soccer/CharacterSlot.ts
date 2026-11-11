@@ -1,21 +1,10 @@
-import { _decorator, Component, Node, Tween, tween, UITransform, Vec2 } from 'cc';
+import { _decorator, Component, Enum, Node, Tween, tween, UITransform, Vec2 } from 'cc';
 import { FxType, Ply_SoundManager } from '../ScriptTemplate/Ply_SoundManager';
-import type { DraggableItem } from './DraggableItem';
+import { DraggableItem } from './DraggableItem';
 import { soccer } from './SoccerContext';
 const { ccclass, property, requireComponent } = _decorator;
 
-/**
- * Âm thanh phản ứng của từng nhân vật khi nhận từng món đồ (lấy từ bản Unity).
- * Key ngoài = tên node nhân vật, key trong = itemID. Không có trong bảng thì phát Siuu.
- */
-const REACTION_FX: Record<string, Record<string, FxType>> = {
-    Messi: { WC: FxType.Siuu, Steak: FxType.Angry, Bong: FxType.Huh, Euro: FxType.Huh },
-    Rol: { WC: FxType.Siuu, Steak: FxType.Angry, Bong: FxType.Huh, Euro: FxType.Siuu },
-    Yamal: { WC: FxType.Cry, Steak: FxType.Siuu, Bong: FxType.Huh, Euro: FxType.Cry },
-    Vin: { WC: FxType.Cry, Steak: FxType.Cry, Bong: FxType.Hehe, Euro: FxType.Cry },
-};
-
-/** Node con hiển thị nhân vật khi nhận 1 món đồ cụ thể. */
+/** Node con hiển thị nhân vật khi nhận 1 món đồ cụ thể + tiếng phản ứng. */
 @ccclass('CharacterItemVisual')
 export class CharacterItemVisual {
     @property({ tooltip: 'ID của món đồ (phải khớp DraggableItem.itemID)' })
@@ -23,6 +12,9 @@ export class CharacterItemVisual {
 
     @property({ type: Node, tooltip: 'Node con hiển thị nhân vật khi cầm món đồ này' })
     visual: Node | null = null;
+
+    @property({ type: Enum(FxType), tooltip: 'Âm thanh phát khi nhân vật nhận món đồ này' })
+    fxType: FxType = FxType.Siuu;
 }
 
 /**
@@ -40,7 +32,11 @@ export class CharacterSlot extends Component {
     @property({ type: [CharacterItemVisual], tooltip: 'Node con ứng với từng món đồ' })
     itemVisuals: CharacterItemVisual[] = [];
 
-    @property({ tooltip: 'ID món đồ ĐÚNG của nhân vật này (VD: WC, Euro, Bong, Steak)' })
+    @property({ type: DraggableItem, tooltip: 'Kéo node món đồ ĐÚNG của nhân vật này (wc, steak, bong, euro...) vào đây' })
+    correctItem: DraggableItem | null = null;
+
+    /** Cách cũ (gõ itemID). Ẩn khỏi Inspector, chỉ dùng khi chưa kéo Correct Item. */
+    @property({ visible: false })
     correctItemID: string = '';
 
     @property({ type: Node, tooltip: 'Điểm món đồ bay tới. Để trống = gốc node (chân nhân vật)' })
@@ -96,8 +92,9 @@ export class CharacterSlot extends Component {
         if (this.hasReceivedItem || !this.acceptInput || !item) return false;
 
         this.hasReceivedItem = true;
-        this.isCorrectItemReceived = !!this.correctItemID &&
-            this.correctItemID.toLowerCase() === item.itemID.toLowerCase();
+        this.isCorrectItemReceived = this.correctItem
+            ? this.correctItem === item
+            : !!this.correctItemID && this.correctItemID.toLowerCase() === item.itemID.toLowerCase();
         this.acceptInput = false;
         item.interactable = false;
 
@@ -115,8 +112,7 @@ export class CharacterSlot extends Component {
                 const entry = this.findVisual(item.itemID);
                 if (entry && entry.visual) this.showVisual(entry.visual);
 
-                const fx = REACTION_FX[this.node.name]?.[item.itemID] ?? FxType.Siuu;
-                Ply_SoundManager.Ins?.playFx(fx);
+                Ply_SoundManager.Ins?.playFx(entry ? entry.fxType : FxType.Siuu);
 
                 soccer.mgr?.onItemCompleted();
             })
