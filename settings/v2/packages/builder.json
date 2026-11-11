@@ -4,14 +4,14 @@
     "totalTime": 500,
     "logo": {
       "type": "custom",
-      "image": "project://settings/splash.png"
+      "image": "project://settings/icon rounded 4.6.png"
     },
     "background": {
       "type": "color",
       "color": {
-        "x": 1,
-        "y": 0.8392156862745098,
-        "z": 0.49411764705882355,
+        "x": 0.8941176470588236,
+        "y": 0.8588235294117647,
+        "z": 0.9058823529411765,
         "w": 1
       }
     },
