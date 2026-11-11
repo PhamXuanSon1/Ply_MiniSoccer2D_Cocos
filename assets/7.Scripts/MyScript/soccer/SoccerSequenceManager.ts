@@ -86,6 +86,10 @@ export class SoccerSequenceManager extends Component implements ISoccerManager {
         }
         if (this.winObject) this.winObject.active = false;
         if (this.loseObject) this.loseObject.active = false;
+        // Endcard chỉ hiện khi thắng: ẩn lúc vào game dù trong scene có lỡ để bật (vd lúc sửa ảnh)
+        const endcard = World.ins?.ui?.winCard;
+        if (endcard) endcard.active = false;
+        if (this.gameplayObject) this.gameplayObject.active = true;
 
         if (this.objectToHideOnFirstDrag) {
             this.hintBaseScale.set(this.objectToHideOnFirstDrag.scale);
