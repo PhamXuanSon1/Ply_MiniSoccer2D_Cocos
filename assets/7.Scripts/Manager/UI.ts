@@ -103,7 +103,7 @@ try{
 
 
     /** @param fx âm thanh thắng; truyền null nếu đã phát trước đó (vd MiniSoccer phát lúc hiện chữ Win). */
-    onWin(fx: FxType | null = FxType.LevelWin) {
+    onWin(fx: FxType | null = FxType.Confetti) {
         if(this.endcard.active || this.winCard.active) return;
         this.offEnds.forEach(button => button.active = false);
         this.offHand();

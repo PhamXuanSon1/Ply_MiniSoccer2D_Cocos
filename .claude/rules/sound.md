@@ -11,7 +11,7 @@ Mọi âm thanh trong project **bắt buộc** đi qua singleton `Ply_SoundManag
    ```ts
    import { Ply_SoundManager, FxType } from '<đường dẫn tương đối>/MyScript/ScriptTemplate/Ply_SoundManager';
 
-   Ply_SoundManager.Ins?.playFx(FxType.TapTile);
+   Ply_SoundManager.Ins?.playFx(FxType.Siuu);
    ```
 2. Loại sound khai báo bằng enum `FxType`. Thêm sound mới thì sửa **cả 4 chỗ** trong `Ply_SoundManager.ts`:
    - thêm giá trị vào `enum FxType`,
@@ -40,7 +40,7 @@ Mọi âm thanh trong project **bắt buộc** đi qua singleton `Ply_SoundManag
 | Đang phát thì xếp hàng tối đa 1 lần | `playFxQueued(type)` |
 | Lặp vô hạn | `playLoopFx(type)` / `stopFx(type)` |
 | Cắt tiếng cũ trên kênh dùng chung rồi phát tiếng mới | `playFxCutoff(type, volumeScale?)` / `stopFxCutoff()` |
-| Thua (dừng tiếng thua cũ rồi phát lại) | `playFail()` |
-| Thắng | `playFx(FxType.LevelWin)` |
+| Thua (dừng tiếng thua cũ rồi phát lại, tiếng `Cry`) | `playFail()` |
+| Thắng | `playFx(FxType.Confetti)` |
 | Mở store / kết thúc game | `stopAll()` |
 | Người chơi tắt / bật tiếng | `mute()` / `muteFx()` / `unmute()` |

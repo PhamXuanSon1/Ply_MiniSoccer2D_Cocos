@@ -7,29 +7,20 @@ const { ccclass, property } = _decorator;
  * Nhac nen (bgm.mp3) phat qua AudioSource `bgm1`.
  */
 export enum FxType {
-    TapTile = 0,
-    CollectCombo = 1,
-    CustomerDone = 2,
-    StarToTable = 3,
-    WaitAreaSlot = 4,
-    DoorOpen = 5,
-    LevelWin = 6,
-    LevelLose = 7,
-    ClockLast2s = 8,
-    CustomerOut = 9,
-    // MiniSoccer
-    Angry = 10,
-    Cry = 11,
-    Hehe = 12,
-    Huh = 13,
-    RoarTiger = 14,
-    Siuu = 15,
-    Confetti = 16,
-    Lose2 = 17,
+    Angry = 0,
+    Cry = 1,
+    Hehe = 2,
+    Huh = 3,
+    RoarTiger = 4,
+    Siuu = 5,
+    Confetti = 6,
+    Lose2 = 7,
+    Right = 8,
+    Wrong = 9,
 }
 Enum(FxType);
 
-const FX_TYPE_COUNT = 18;
+const FX_TYPE_COUNT = 10;
 
 /**
  * Cau hinh du lieu am thanh.
@@ -52,37 +43,6 @@ class SoundData {
  */
 @ccclass('FxAudio')
 class FxAudio {
-    @property({ type: SoundData, tooltip: 'SFX_Tap_Tile - Cham tile' })
-    tapTile: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Collect_Combo_01 - Hoan thanh combo' })
-    collectCombo: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Customer_Done - Khach hoan tat don' })
-    customerDone: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Star_To_Table - Sao bay ve ban' })
-    starToTable: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Wait_Area_Slot - Hieu ung o cho' })
-    waitAreaSlot: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Door_Open - Mo cua' })
-    doorOpen: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Level_Win - Thang level' })
-    levelWin: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'SFX_Level_Lose - Thua level' })
-    levelLose: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'Dong ho khach con 2 giay cuoi (tich tac / bao dong)' })
-    clockLast2s: SoundData = new SoundData();
-
-    @property({ type: SoundData, tooltip: 'Khach het gio, gian bo di' })
-    customerOut: SoundData = new SoundData();
-
-    // ---------------- MiniSoccer ----------------
     @property({ type: SoundData, tooltip: 'angry.mp3 - Nhan vat tuc gian' })
     angry: SoundData = new SoundData();
 
@@ -106,20 +66,16 @@ class FxAudio {
 
     @property({ type: SoundData, tooltip: 'lose2.mp3 - Thua' })
     lose2: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'right.mp3 - Đúng' })
+    right: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'wrong.mp3 - Sai' })
+    wrong: SoundData = new SoundData();
 }
 
 /** Ten truong trong FxAudio theo tung FxType. */
 const FX_FIELDS: Record<FxType, keyof FxAudio> = {
-    [FxType.TapTile]: 'tapTile',
-    [FxType.CollectCombo]: 'collectCombo',
-    [FxType.CustomerDone]: 'customerDone',
-    [FxType.StarToTable]: 'starToTable',
-    [FxType.WaitAreaSlot]: 'waitAreaSlot',
-    [FxType.DoorOpen]: 'doorOpen',
-    [FxType.LevelWin]: 'levelWin',
-    [FxType.LevelLose]: 'levelLose',
-    [FxType.ClockLast2s]: 'clockLast2s',
-    [FxType.CustomerOut]: 'customerOut',
     [FxType.Angry]: 'angry',
     [FxType.Cry]: 'cry',
     [FxType.Hehe]: 'hehe',
@@ -128,6 +84,8 @@ const FX_FIELDS: Record<FxType, keyof FxAudio> = {
     [FxType.Siuu]: 'siuu',
     [FxType.Confetti]: 'confetti',
     [FxType.Lose2]: 'lose2',
+    [FxType.Right]: 'right',
+    [FxType.Wrong]: 'wrong',
 };
 
 /**
@@ -275,14 +233,14 @@ export class Ply_SoundManager extends Ply_Singleton {
     }
 
     /**
-     * Sound thua (LevelLose): neu dang phat do thi DUNG ngay va phat lai tu dau.
+     * Sound thua (Cry): neu dang phat do thi DUNG ngay va phat lai tu dau.
      */
     public playFail(): void {
         if (this.isBlocked) return;
-        const index = FxType.LevelLose as number;
+        const index = FxType.Cry as number;
         const src = this.fxSources[index];
         if (src && src.playing) src.stop();
-        this.playFx(FxType.LevelLose);
+        this.playFx(FxType.Cry);
     }
 
     /**
