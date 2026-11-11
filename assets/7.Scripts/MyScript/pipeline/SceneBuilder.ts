@@ -24,7 +24,6 @@ import {
     JsonAsset, resources, CCClass, js, Size, sp, assetManager, Asset,
 } from 'cc';
 import { EDITOR } from 'cc/env';
-import { MaterialType } from '../item/ItemController';
 
 
 const { ccclass, property, executeInEditMode, menu } = _decorator;
@@ -318,7 +317,7 @@ export class SceneBuilder extends Component {
 
     /**
      * Tên node: n.name (bake trong JSON) > nameMap[path] > nameMap[sprite.key] > đuôi path.
-     * Cùng cha mà trùng tên thì nối _2, _3... để AutoAssignByNameTool tra được.
+     * Cùng cha mà trùng tên thì nối _2, _3... để tra theo tên không bị trùng.
      */
     private resolveName(n: NodeJson, parent: Node): string {
         const map = (this.nameMap?.json ?? {}) as Record<string, unknown>;
@@ -479,10 +478,6 @@ export class SceneBuilder extends Component {
         }
 
         if (typeof raw === 'string') {
-            if (typeof current === 'number') {
-                const enumVal = (MaterialType as any)[raw];
-                if (typeof enumVal === 'number') return enumVal;
-            }
             return raw;
         }
 
