@@ -69,6 +69,9 @@ try{
         if (now - this.lastEndGameTap < 500) return;
         this.lastEndGameTap = now;
         this.openStore();
+        // openStore có thể chặn luồng (hộp xác nhận ở preview / SDK mở store): sự kiện trùng
+        // của cùng lần chạm được xử lý sau đó -> tính lại mốc thời gian từ lúc openStore xong
+        this.lastEndGameTap = Date.now();
     }
 
     onDestroy() {
