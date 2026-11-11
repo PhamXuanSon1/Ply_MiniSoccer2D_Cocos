@@ -1,0 +1,40 @@
+{
+    "package_version": 2,
+    "name": "character-visual-tool",
+    "version": "1.0.0",
+    "title": "Character Visual Tool",
+    "description": "Đổi ảnh nhân vật: gán ảnh, trim, neo chân (anchor 0.5, 0), scale, offset cho các node con của node đang chọn.",
+    "author": "Ply",
+    "editor": ">=3.8.0",
+    "main": "./main.js",
+    "panels": {
+        "default": {
+            "title": "Character Visual Tool",
+            "type": "dockable",
+            "main": "./panel.js",
+            "size": {
+                "min-width": 360,
+                "min-height": 300,
+                "width": 460,
+                "height": 620
+            }
+        }
+    },
+    "contributions": {
+        "menu": [
+            {
+                "path": "Extension",
+                "label": "Character Visual Tool",
+                "message": "open-panel"
+            }
+        ],
+        "messages": {
+            "open-panel": {
+                "methods": ["openPanel"]
+            }
+        },
+        "scene": {
+            "script": "./scene.js"
+        }
+    }
+}
