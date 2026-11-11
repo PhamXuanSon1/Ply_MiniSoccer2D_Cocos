@@ -1,4 +1,4 @@
-import { _decorator, AudioClip, AudioSource, Node, Enum, CCFloat, CCInteger } from 'cc';
+import { _decorator, AudioClip, AudioSource, Node, Enum, CCFloat, CCInteger, game, Game } from 'cc';
 import { Ply_Singleton } from './Ply_Singleton';
 const { ccclass, property } = _decorator;
 
@@ -119,9 +119,91 @@ export class Ply_SoundManager extends Ply_Singleton {
 
     private isMute: boolean = false;
 
+    /** Bi tat tieng tam thoi do he thong (an app, khoa man hinh, ad network bao mute). */
+    private systemPaused: boolean = false;
+    private bgmWasPlaying: boolean = false;
+    private systemListenersBound: boolean = false;
+
+    /** Khong phat FX khi nguoi choi mute hoac he thong dang tam dung am thanh. */
+    private get isBlocked(): boolean {
+        return this.isMute || this.systemPaused;
+    }
+
     onLoad() {
         super.onLoad();
+        if (!this.node.isValid) return; // ban sao bi Ply_Singleton huy
         Ply_SoundManager.Ins = this;
+    }
+
+    start() {
+        this.bindSystemEvents();
+        this.schedule(this.checkWindowVolume, 1);
+        this.checkWindowVolume();
+    }
+
+    // ---------------------------------------------------------------------
+    // Tu dong tat / mo tieng theo trang thai he thong (yeu cau cua playable ad)
+    // ---------------------------------------------------------------------
+
+    private readonly onSystemHide = () => this.pauseBySystem();
+    private readonly onSystemShow = () => this.resumeBySystem();
+    private readonly onVisibilityChange = () => {
+        if (document.hidden) this.pauseBySystem();
+        else this.resumeBySystem();
+    };
+    private readonly onAudioChanged = (e: Event) => {
+        const detail = (e as CustomEvent).detail;
+        if (detail && detail.mute) this.pauseBySystem();
+        else this.resumeBySystem();
+    };
+
+    private bindSystemEvents(): void {
+        if (this.systemListenersBound) return;
+        this.systemListenersBound = true;
+        game.on(Game.EVENT_HIDE, this.onSystemHide);
+        game.on(Game.EVENT_SHOW, this.onSystemShow);
+        window.addEventListener('audioChanged', this.onAudioChanged);
+        document.addEventListener('visibilitychange', this.onVisibilityChange);
+        document.addEventListener('pause', this.onSystemHide);
+        document.addEventListener('play', this.onSystemShow);
+    }
+
+    private unbindSystemEvents(): void {
+        if (!this.systemListenersBound) return;
+        this.systemListenersBound = false;
+        game.off(Game.EVENT_HIDE, this.onSystemHide);
+        game.off(Game.EVENT_SHOW, this.onSystemShow);
+        window.removeEventListener('audioChanged', this.onAudioChanged);
+        document.removeEventListener('visibilitychange', this.onVisibilityChange);
+        document.removeEventListener('pause', this.onSystemHide);
+        document.removeEventListener('play', this.onSystemShow);
+    }
+
+    /** Mot so ad network bao am luong qua window.volume (0..100). */
+    private checkWindowVolume(): void {
+        const volume = (window as any).volume;
+        if (volume === undefined) return;
+        if (volume >= 10) this.resumeBySystem();
+        else this.pauseBySystem();
+    }
+
+    private pauseBySystem(): void {
+        if (this.systemPaused) return;
+        this.systemPaused = true;
+        this.bgmWasPlaying = !!this.bgm1 && this.bgm1.playing;
+        if (this.bgm1) this.bgm1.pause();
+        this.stopFxSequence();
+        this.stopFxCutoff();
+        for (let i = 0; i < this.fxSources.length; i++) {
+            if (this.fxSources[i]) this.fxSources[i]!.stop();
+        }
+    }
+
+    private resumeBySystem(): void {
+        if (!this.systemPaused) return;
+        this.systemPaused = false;
+        if (this.bgmWasPlaying && !this.isMute && this.bgm1) this.bgm1.play();
+        this.bgmWasPlaying = false;
     }
 
     /**
@@ -129,7 +211,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Neu dang phat, no se phat lai tu dau.
      */
     public playFx(fxType: FxType) {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         const data = this.getSoundData(fxType);
         if (!data || !data.clip) return;
@@ -154,7 +236,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Sound thua (LevelLose): neu dang phat do thi DUNG ngay va phat lai tu dau.
      */
     public playFail(): void {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
         const index = FxType.LevelLose as number;
         const src = this.fxSources[index];
         if (src && src.playing) src.stop();
@@ -165,7 +247,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Phat am thanh hieu ung dang OneShot (khong cat dut am thanh dang phat, cho phep chong am).
      */
     public playFxOneShot(fxType: FxType, volumeScale: number = 1): void {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         const data = this.getSoundData(fxType);
         if (!data || !data.clip) return;
@@ -192,7 +274,7 @@ export class Ply_SoundManager extends Ply_Singleton {
         interval: number = 0.04,
         volumeScale: number = 1,
     ): void {
-        if (this.isMute || count <= 0) return;
+        if (this.isBlocked || count <= 0) return;
 
         const types = Array.isArray(fxTypes) ? fxTypes : [fxTypes];
         if (types.length === 0) return;
@@ -218,7 +300,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      */
     public playFxSequence(fxTypes: readonly FxType[]): void {
         this.stopFxSequence();
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         this.sequence = fxTypes.filter((fxType) => {
             const data = this.getSoundData(fxType);
@@ -229,7 +311,7 @@ export class Ply_SoundManager extends Ply_Singleton {
     }
 
     private playNextFxInSequence(): void {
-        if (this.isMute || this.sequenceIndex >= this.sequence.length) {
+        if (this.isBlocked || this.sequenceIndex >= this.sequence.length) {
             this.stopFxSequence();
             return;
         }
@@ -278,7 +360,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Neu ang ranh, phat ngay va bat dau kiem tra hang cho.
      */
     public playFxQueued(fxType: FxType) {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         const data = this.getSoundData(fxType);
         if (!data || !data.clip) return;
@@ -343,7 +425,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Phat am thanh hieu ung lặp lai (loop).
      */
     public playLoopFx(fxType: FxType) {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         const data = this.getSoundData(fxType);
         if (!data || !data.clip) return;
@@ -375,6 +457,8 @@ export class Ply_SoundManager extends Ply_Singleton {
      */
     public playBGM1() {
         if (this.isMute) return;
+        // Dang bi he thong tam dung: ghi nho de phat lai khi mo tieng
+        if (this.systemPaused) { this.bgmWasPlaying = true; return; }
         if (this.bgm1 && !this.bgm1.playing) {
             this.bgm1.play();
         }
@@ -473,7 +557,7 @@ export class Ply_SoundManager extends Ply_Singleton {
      * Thich hop cho hieu ung burst/loop nhanh ma khong muon chong am lam on.
      */
     public playFxCutoff(fxType: FxType, volumeScale: number = 1): void {
-        if (this.isMute) return;
+        if (this.isBlocked) return;
 
         const data = this.getSoundData(fxType);
         if (!data || !data.clip) return;
@@ -502,6 +586,8 @@ export class Ply_SoundManager extends Ply_Singleton {
     }
 
     onDestroy() {
+        this.unbindSystemEvents();
+        this.unschedule(this.checkWindowVolume);
         this.stopFxSequence();
         this.stopFxCutoff();
         super.onDestroy();
