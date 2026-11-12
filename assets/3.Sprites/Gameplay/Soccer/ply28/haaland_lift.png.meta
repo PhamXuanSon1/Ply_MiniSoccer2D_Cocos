@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "8bb57033-06b7-4be9-a955-11204feb3076",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "8bb57033-06b7-4be9-a955-11204feb3076@6c48a",
+      "displayName": "haaland_lift",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "8bb57033-06b7-4be9-a955-11204feb3076",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "8bb57033-06b7-4be9-a955-11204feb3076@f9941",
+      "displayName": "haaland_lift",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 3,
+        "trimX": 32,
+        "trimY": 36,
+        "width": 384,
+        "height": 522,
+        "rawWidth": 448,
+        "rawHeight": 600,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -192,
+            -261,
+            0,
+            192,
+            -261,
+            0,
+            -192,
+            261,
+            0,
+            192,
+            261,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            32,
+            564,
+            416,
+            564,
+            32,
+            42,
+            416,
+            42
+          ],
+          "nuv": [
+            0.07142857142857142,
+            0.07,
+            0.9285714285714286,
+            0.07,
+            0.07142857142857142,
+            0.94,
+            0.9285714285714286,
+            0.94
+          ],
+          "minPos": [
+            -192,
+            -261,
+            0
+          ],
+          "maxPos": [
+            192,
+            261,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "8bb57033-06b7-4be9-a955-11204feb3076@6c48a",
+        "atlasUuid": "",
+        "trimType": "auto"
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "fixAlphaTransparencyArtifacts": false,
+    "hasAlpha": true,
+    "redirect": "8bb57033-06b7-4be9-a955-11204feb3076@6c48a"
+  }
+}
