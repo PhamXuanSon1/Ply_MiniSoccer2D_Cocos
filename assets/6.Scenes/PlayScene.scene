@@ -547,13 +547,13 @@
         "__id__": 24
       },
       {
-        "__id__": 697
-      },
-      {
-        "__id__": 749
-      },
-      {
         "__id__": 777
+      },
+      {
+        "__id__": 725
+      },
+      {
+        "__id__": 697
       }
     ],
     "spawnPoint": {
@@ -572,7 +572,7 @@
         "__id__": 720
       },
       {
-        "__id__": 744
+        "__id__": 748
       },
       {
         "__id__": 772
@@ -607,12 +607,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "itemID": "FlagPortugal",
+    "itemID": "HairShortBlackCurls",
     "_id": "5a/+WnlvZAqoYvqQyNo6YC"
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagPortugal",
+    "_name": "HairShortBlackCurls",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -647,9 +647,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.5,
-      "y": 1.5,
-      "z": 1.5
+      "x": 0.7,
+      "y": 0.7,
+      "z": 0.7
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -677,19 +677,19 @@
         "__id__": 701
       },
       {
-        "__id__": 725
+        "__id__": 729
       },
       {
         "__id__": 753
       },
       {
-        "__id__": 698
-      },
-      {
-        "__id__": 750
-      },
-      {
         "__id__": 778
+      },
+      {
+        "__id__": 726
+      },
+      {
+        "__id__": 698
       },
       {
         "__id__": 25
@@ -15139,7 +15139,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.132,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -15178,8 +15178,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 422,
-      "height": 914
+      "width": 408,
+      "height": 890
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -15209,7 +15209,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "7066c8d7-0177-40f3-adcc-a6c8cbe5ec99@f9941",
+      "__uuid__": "a0be0067-8c43-49ea-a7ee-3ce36ffd1143@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15229,7 +15229,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagSpain",
+    "_name": "HairBrownSpiky",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -15248,7 +15248,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.132,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -15261,8 +15261,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 1.0102156640181612,
+      "y": 1.0102156640181612,
       "z": 1
     },
     "_mobility": 0,
@@ -15287,8 +15287,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 420,
-      "height": 914
+      "width": 366,
+      "height": 881
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -15318,7 +15318,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "9d1d8352-ce35-45a2-b3e6-27e321519d7f@f9941",
+      "__uuid__": "58a3f188-cc0f-49ac-b446-404accee2b89@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15338,7 +15338,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagPortugal",
+    "_name": "HairShortBlackCurls",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -15357,7 +15357,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.132,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -15370,8 +15370,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9989071038251366,
-      "y": 0.9989071038251366,
+      "x": 0.9559613319011815,
+      "y": 0.9559613319011815,
       "z": 1
     },
     "_mobility": 0,
@@ -15396,8 +15396,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 420,
-      "height": 915
+      "width": 527,
+      "height": 931
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -15427,7 +15427,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "ec2acfce-7588-4d79-a9b4-0356c067b2a9@f9941",
+      "__uuid__": "29b0f4d9-adf0-4314-a4fe-e6e744975497@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15447,7 +15447,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "France",
+    "_name": "HairBrownSidePart",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -15466,7 +15466,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.132,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -15479,8 +15479,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0043956043956044,
-      "y": 1.0043956043956044,
+      "x": 0.978021978021978,
+      "y": 0.978021978021978,
       "z": 1
     },
     "_mobility": 0,
@@ -15505,7 +15505,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 422,
+      "width": 380,
       "height": 910
     },
     "_anchorPoint": {
@@ -15536,7 +15536,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "8e86925b-2ca8-462e-874b-f63f772f0387@f9941",
+      "__uuid__": "3e1a54e8-61f1-4aeb-b178-a9e5d781d26f@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15556,7 +15556,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagArgentina",
+    "_name": "HairBlondSideSwept",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -15575,7 +15575,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 10.132,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -15588,8 +15588,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9580712788259959,
-      "y": 0.9580712788259959,
+      "x": 0.9801762114537445,
+      "y": 0.9801762114537445,
       "z": 1
     },
     "_mobility": 0,
@@ -15614,8 +15614,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 429,
-      "height": 954
+      "width": 372,
+      "height": 908
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -15645,7 +15645,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "d2cc1cf6-38c9-42d5-879e-b68083588589@f9941",
+      "__uuid__": "f1e501d2-fc1b-4d64-a435-417ebcbef9db@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15681,8 +15681,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 173.335,
+      "x": 1.001,
+      "y": 815.654,
       "z": 0
     },
     "_lrot": {
@@ -15742,12 +15742,12 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 411.01257861635224,
-      "height": 914
+      "width": 364.62555066079295,
+      "height": 890
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.4753486863246163,
+      "x": 0.5,
       "y": 0
     },
     "_id": "90aTlZHz1Li7dwGicHpL5T"
@@ -15782,7 +15782,7 @@
     "correctItem": {
       "__id__": 697
     },
-    "correctItemID": "FlagArgentina",
+    "correctItemID": "HairBrownSpiky",
     "flyTarget": {
       "__id__": 689
     },
@@ -15791,15 +15791,15 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagArgentina",
+    "itemID": "HairBlondSideSwept",
     "visual": {
       "__id__": 686
     },
-    "fxType": 8
+    "fxType": 9
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "France",
+    "itemID": "HairBrownSidePart",
     "visual": {
       "__id__": 683
     },
@@ -15807,15 +15807,15 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagSpain",
+    "itemID": "HairBrownSpiky",
     "visual": {
       "__id__": 677
     },
-    "fxType": 9
+    "fxType": 8
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagPortugal",
+    "itemID": "HairShortBlackCurls",
     "visual": {
       "__id__": 680
     },
@@ -15831,12 +15831,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "itemID": "FlagArgentina",
-    "_id": "adw4o4n4FAp76XL4igrZst"
+    "itemID": "HairBrownSpiky",
+    "_id": "8egi+O/UVHkpRFU8rQi1Xt"
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagArgentina",
+    "_name": "HairBrownSpiky",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -15871,9 +15871,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.5,
-      "y": 1.5,
-      "z": 1.5
+      "x": 0.7,
+      "y": 0.7,
+      "z": 0.7
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -15883,7 +15883,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "e2YcXsfHVPPLe22zqzgdw/"
+    "_id": "3c/mXIHlZA0KV2PVJ4bImB"
   },
   {
     "__type__": "cc.UITransform",
@@ -15897,15 +15897,15 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 694,
-      "height": 695
+      "width": 387,
+      "height": 320
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
       "y": 0.5
     },
-    "_id": "0b/I+UPwVE6at1NWxrXWY6"
+    "_id": "e8vg0qkj1FnZiY8yJ55p2g"
   },
   {
     "__type__": "cc.Sprite",
@@ -15928,7 +15928,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "932ca6e3-ce5c-4912-8e21-5191aed0bfaf@f9941",
+      "__uuid__": "325ead8e-ae51-41d4-961a-6350abd5850c@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -15944,7 +15944,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": null,
-    "_id": "04pARdkwVNTYz9BqP9USJm"
+    "_id": "7dwkCXkB5CZI/lUbU2oJpy"
   },
   {
     "__type__": "cc.Node",
@@ -16022,7 +16022,7 @@
       "__id__": 701
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 703
@@ -16073,8 +16073,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 526,
-      "height": 984
+      "width": 464,
+      "height": 959
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16104,7 +16104,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "966bfe03-e014-44f6-a959-d1430e0992bc@f9941",
+      "__uuid__": "66d553dd-a389-4ab0-8189-753981330243@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16124,7 +16124,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagSpain",
+    "_name": "HairBrownSpiky",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -16156,8 +16156,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0020366598778003,
-      "y": 1.0020366598778003,
+      "x": 0.995846313603323,
+      "y": 0.995846313603323,
       "z": 1
     },
     "_mobility": 0,
@@ -16182,8 +16182,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 530,
-      "height": 982
+      "width": 449,
+      "height": 963
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16213,7 +16213,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "9ef9a488-e29b-421e-bc51-b9f1835f8071@f9941",
+      "__uuid__": "eb48f316-ebfb-45dc-9153-6fe49099e9a1@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16233,7 +16233,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagPortugal",
+    "_name": "HairShortBlackCurls",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -16265,8 +16265,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0092307692307692,
-      "y": 1.0092307692307692,
+      "x": 0.9815762538382804,
+      "y": 0.9815762538382804,
       "z": 1
     },
     "_mobility": 0,
@@ -16291,8 +16291,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 518,
-      "height": 975
+      "width": 385,
+      "height": 977
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16322,7 +16322,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "8095fe44-4a12-4e61-9227-2ee09993a69a@f9941",
+      "__uuid__": "58fb1ed6-a4bd-49c1-8aa7-0bcf256b428d@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16342,7 +16342,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "France",
+    "_name": "HairBrownSidePart",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -16374,8 +16374,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0010172939979654,
-      "y": 1.0010172939979654,
+      "x": 1.034519956850054,
+      "y": 1.034519956850054,
       "z": 1
     },
     "_mobility": 0,
@@ -16400,8 +16400,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 550,
-      "height": 983
+      "width": 434,
+      "height": 927
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16431,7 +16431,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "69d56519-bdee-456b-9e2c-63bc12209b7d@f9941",
+      "__uuid__": "00eb132a-beb3-458f-af43-935b17180d27@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16451,14 +16451,14 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagArgentina",
+    "_name": "HairBlondSideSwept",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 701
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 715
@@ -16483,8 +16483,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0020366598778003,
-      "y": 1.0020366598778003,
+      "x": 1.034519956850054,
+      "y": 1.034519956850054,
       "z": 1
     },
     "_mobility": 0,
@@ -16509,8 +16509,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 528,
-      "height": 982
+      "width": 400,
+      "height": 927
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16540,7 +16540,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "05c87a48-81cb-4df1-baf4-2f93a374cfc4@f9941",
+      "__uuid__": "cc35d6f2-b1a6-4b11-8cc3-d7a402d398a5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16576,8 +16576,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 289,
+      "x": 0.001,
+      "y": 867.087,
       "z": 0
     },
     "_lrot": {
@@ -16637,8 +16637,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 526,
-      "height": 984
+      "width": 413.8079827400216,
+      "height": 959.0000000000001
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16675,9 +16675,9 @@
       }
     ],
     "correctItem": {
-      "__id__": 24
+      "__id__": 725
     },
-    "correctItemID": "FlagPortugal",
+    "correctItemID": "HairBrownSidePart",
     "flyTarget": {
       "__id__": 717
     },
@@ -16686,7 +16686,7 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagArgentina",
+    "itemID": "HairBlondSideSwept",
     "visual": {
       "__id__": 714
     },
@@ -16694,15 +16694,15 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "France",
+    "itemID": "HairBrownSidePart",
     "visual": {
       "__id__": 711
     },
-    "fxType": 9
+    "fxType": 8
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagSpain",
+    "itemID": "HairBrownSpiky",
     "visual": {
       "__id__": 705
     },
@@ -16710,15 +16710,140 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagPortugal",
+    "itemID": "HairShortBlackCurls",
     "visual": {
       "__id__": 708
     },
-    "fxType": 8
+    "fxType": 9
+  },
+  {
+    "__type__": "86a99U2qzVJQam+LraZx/Dc",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 726
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "itemID": "HairBrownSidePart",
+    "_id": "3dIt/2DoJDaJPuBtoI5Rut"
   },
   {
     "__type__": "cc.Node",
-    "_name": "Mbappe",
+    "_name": "HairBrownSidePart",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "_parent": {
+      "__id__": 26
+    },
+    "_children": [],
+    "_active": true,
+    "_components": [
+      {
+        "__id__": 727
+      },
+      {
+        "__id__": 728
+      },
+      {
+        "__id__": 725
+      }
+    ],
+    "_prefab": null,
+    "_lpos": {
+      "__type__": "cc.Vec3",
+      "x": -1849.999,
+      "y": -339.923,
+      "z": 0
+    },
+    "_lrot": {
+      "__type__": "cc.Quat",
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "_lscale": {
+      "__type__": "cc.Vec3",
+      "x": 0.7,
+      "y": 0.7,
+      "z": 0.7
+    },
+    "_mobility": 0,
+    "_layer": 33554432,
+    "_euler": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_id": "17CHRkzlJLNKnQdCRB7H7Y"
+  },
+  {
+    "__type__": "cc.UITransform",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 726
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 448,
+      "height": 385
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_id": "d14exptYBOw46mrHyYtMg/"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 726
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "_customMaterial": null,
+    "_srcBlendFactor": 2,
+    "_dstBlendFactor": 4,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_spriteFrame": {
+      "__uuid__": "31342a8f-409e-4b24-9e7e-9e3096c6437a@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
+    "_type": 0,
+    "_fillType": 0,
+    "_sizeMode": 1,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_useGrayscale": false,
+    "_atlas": null,
+    "_id": "144H/heWZFPqAj1ypkrMa/"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "neyma",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -16726,31 +16851,31 @@
     },
     "_children": [
       {
-        "__id__": 726
+        "__id__": 730
       },
       {
-        "__id__": 729
+        "__id__": 733
       },
       {
-        "__id__": 732
+        "__id__": 736
       },
       {
-        "__id__": 735
+        "__id__": 739
       },
       {
-        "__id__": 738
+        "__id__": 742
       },
       {
-        "__id__": 741
+        "__id__": 745
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 743
+        "__id__": 747
       },
       {
-        "__id__": 744
+        "__id__": 748
       }
     ],
     "_prefab": null,
@@ -16789,16 +16914,16 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
-        "__id__": 727
+        "__id__": 731
       },
       {
-        "__id__": 728
+        "__id__": 732
       }
     ],
     "_prefab": null,
@@ -16837,14 +16962,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 726
+      "__id__": 730
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 384,
-      "height": 957
+      "width": 455,
+      "height": 934
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16859,7 +16984,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 726
+      "__id__": 730
     },
     "_enabled": true,
     "__prefab": null,
@@ -16874,7 +16999,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "a9044a67-e74c-4083-a5a3-e37984483c65@f9941",
+      "__uuid__": "fc55f8a9-0d60-4497-8208-4fe10d065696@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -16894,20 +17019,20 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagSpain",
+    "_name": "HairBrownSpiky",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 730
+        "__id__": 734
       },
       {
-        "__id__": 731
+        "__id__": 735
       }
     ],
     "_prefab": null,
@@ -16926,8 +17051,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9686234817813765,
-      "y": 0.9686234817813765,
+      "x": 0.9831578947368421,
+      "y": 0.9831578947368421,
       "z": 1
     },
     "_mobility": 0,
@@ -16946,14 +17071,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 729
+      "__id__": 733
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 591,
-      "height": 988
+      "width": 424,
+      "height": 950
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -16968,7 +17093,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 729
+      "__id__": 733
     },
     "_enabled": true,
     "__prefab": null,
@@ -16983,7 +17108,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "7adc25b5-525d-4254-97aa-0a862a48914a@f9941",
+      "__uuid__": "a0334dc1-4a88-4a2f-b5f5-a4a84d90f13e@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17003,20 +17128,20 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagPortugal",
+    "_name": "HairShortBlackCurls",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 733
+        "__id__": 737
       },
       {
-        "__id__": 734
+        "__id__": 738
       }
     ],
     "_prefab": null,
@@ -17035,8 +17160,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0010460251046025,
-      "y": 1.0010460251046025,
+      "x": 0.9800629590766002,
+      "y": 0.9800629590766002,
       "z": 1
     },
     "_mobility": 0,
@@ -17055,14 +17180,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 732
+      "__id__": 736
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 644,
-      "height": 956
+      "width": 444,
+      "height": 953
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17077,7 +17202,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 732
+      "__id__": 736
     },
     "_enabled": true,
     "__prefab": null,
@@ -17092,7 +17217,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "3d528d6c-2f9c-45e7-bf2a-782421e14879@f9941",
+      "__uuid__": "4cda74f1-27f5-40a3-8e79-1cb4f09aeb9b@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17112,26 +17237,26 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "France",
+    "_name": "HairBrownSidePart",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
     "_active": false,
     "_components": [
       {
-        "__id__": 736
+        "__id__": 740
       },
       {
-        "__id__": 737
+        "__id__": 741
       }
     ],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 80.433,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -17144,8 +17269,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9835560123329907,
-      "y": 0.9835560123329907,
+      "x": 1.0010718113612005,
+      "y": 1.0010718113612005,
       "z": 1
     },
     "_mobility": 0,
@@ -17164,14 +17289,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 735
+      "__id__": 739
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 509,
-      "height": 973
+      "width": 432,
+      "height": 933
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17186,7 +17311,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 735
+      "__id__": 739
     },
     "_enabled": true,
     "__prefab": null,
@@ -17201,7 +17326,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "3f5c4928-dc4e-4584-a48d-e2bc6c9af6c5@f9941",
+      "__uuid__": "2684b323-bf83-4c97-9b9e-25c2a063637c@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17221,26 +17346,26 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagArgentina",
+    "_name": "HairBlondSideSwept",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
-        "__id__": 739
+        "__id__": 743
       },
       {
-        "__id__": 740
+        "__id__": 744
       }
     ],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -29.493,
+      "x": 0,
       "y": 0,
       "z": 0
     },
@@ -17253,8 +17378,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0052521008403361,
-      "y": 1.0052521008403361,
+      "x": 0.9915074309978769,
+      "y": 0.9915074309978769,
       "z": 1
     },
     "_mobility": 0,
@@ -17273,14 +17398,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 738
+      "__id__": 742
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 615,
-      "height": 952
+      "width": 401,
+      "height": 942
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17295,7 +17420,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 738
+      "__id__": 742
     },
     "_enabled": true,
     "__prefab": null,
@@ -17310,7 +17435,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20fa3978-58c3-4d08-9619-797bc0a0e189@f9941",
+      "__uuid__": "750f2352-9416-4b62-bdb5-e7385fbeb691@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17334,20 +17459,20 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 725
+      "__id__": 729
     },
     "_children": [],
     "_active": true,
     "_components": [
       {
-        "__id__": 742
+        "__id__": 746
       }
     ],
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -38.5,
-      "y": 303.20000000000005,
+      "x": 2.792,
+      "y": 839.995,
       "z": 0
     },
     "_lrot": {
@@ -17379,7 +17504,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 741
+      "__id__": 745
     },
     "_enabled": true,
     "__prefab": null,
@@ -17401,14 +17526,14 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 725
+      "__id__": 729
     },
     "_enabled": true,
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 384,
-      "height": 957
+      "width": 397.5944798301486,
+      "height": 934
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17423,197 +17548,72 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "node": {
-      "__id__": 725
+      "__id__": 729
     },
     "_enabled": true,
     "__prefab": null,
     "normalVisual": {
-      "__id__": 726
+      "__id__": 730
     },
     "itemVisuals": [
       {
-        "__id__": 745
+        "__id__": 749
       },
       {
-        "__id__": 746
+        "__id__": 750
       },
       {
-        "__id__": 747
+        "__id__": 751
       },
       {
-        "__id__": 748
+        "__id__": 752
       }
     ],
     "correctItem": {
-      "__id__": 749
+      "__id__": 24
     },
-    "correctItemID": "France",
+    "correctItemID": "HairShortBlackCurls",
     "flyTarget": {
-      "__id__": 741
+      "__id__": 745
     },
     "flyToCharacterDuration": 0.35,
     "_id": "44dw4FL2BESbqKT9uGbYLw"
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagArgentina",
+    "itemID": "HairBlondSideSwept",
     "visual": {
-      "__id__": 738
+      "__id__": 742
     },
     "fxType": 9
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "France",
+    "itemID": "HairBrownSidePart",
     "visual": {
-      "__id__": 735
+      "__id__": 739
+    },
+    "fxType": 9
+  },
+  {
+    "__type__": "CharacterItemVisual",
+    "itemID": "HairBrownSpiky",
+    "visual": {
+      "__id__": 733
+    },
+    "fxType": 9
+  },
+  {
+    "__type__": "CharacterItemVisual",
+    "itemID": "HairShortBlackCurls",
+    "visual": {
+      "__id__": 736
     },
     "fxType": 8
   },
   {
-    "__type__": "CharacterItemVisual",
-    "itemID": "FlagSpain",
-    "visual": {
-      "__id__": 729
-    },
-    "fxType": 9
-  },
-  {
-    "__type__": "CharacterItemVisual",
-    "itemID": "FlagPortugal",
-    "visual": {
-      "__id__": 732
-    },
-    "fxType": 9
-  },
-  {
-    "__type__": "86a99U2qzVJQam+LraZx/Dc",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 750
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "itemID": "France",
-    "_id": "3dIt/2DoJDaJPuBtoI5Rut"
-  },
-  {
     "__type__": "cc.Node",
-    "_name": "France",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "_parent": {
-      "__id__": 26
-    },
-    "_children": [],
-    "_active": true,
-    "_components": [
-      {
-        "__id__": 751
-      },
-      {
-        "__id__": 752
-      },
-      {
-        "__id__": 749
-      }
-    ],
-    "_prefab": null,
-    "_lpos": {
-      "__type__": "cc.Vec3",
-      "x": -1849.999,
-      "y": -339.923,
-      "z": 0
-    },
-    "_lrot": {
-      "__type__": "cc.Quat",
-      "x": 0,
-      "y": 0,
-      "z": 0,
-      "w": 1
-    },
-    "_lscale": {
-      "__type__": "cc.Vec3",
-      "x": 1.5,
-      "y": 1.5,
-      "z": 1.5
-    },
-    "_mobility": 0,
-    "_layer": 33554432,
-    "_euler": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_id": "17CHRkzlJLNKnQdCRB7H7Y"
-  },
-  {
-    "__type__": "cc.UITransform",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 750
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 767,
-      "height": 658
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_id": "d14exptYBOw46mrHyYtMg/"
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "__editorExtras__": {},
-    "node": {
-      "__id__": 750
-    },
-    "_enabled": true,
-    "__prefab": null,
-    "_customMaterial": null,
-    "_srcBlendFactor": 2,
-    "_dstBlendFactor": 4,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
-      "a": 255
-    },
-    "_spriteFrame": {
-      "__uuid__": "31342a8f-409e-4b24-9e7e-9e3096c6437a@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    },
-    "_type": 0,
-    "_fillType": 0,
-    "_sizeMode": 1,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_useGrayscale": false,
-    "_atlas": null,
-    "_id": "144H/heWZFPqAj1ypkrMa/"
-  },
-  {
-    "__type__": "cc.Node",
-    "_name": "Yamal",
+    "_name": "Halland",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -17687,7 +17687,7 @@
       "__id__": 753
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 755
@@ -17699,8 +17699,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 58.984,
-      "y": -0.001,
+      "x": 0,
+      "y": 0,
       "z": 0
     },
     "_lrot": {
@@ -17738,8 +17738,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 541,
-      "height": 945
+      "width": 451,
+      "height": 937
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17769,7 +17769,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "718ac9ad-9035-458e-8c0f-eb6f65a26464@f9941",
+      "__uuid__": "49b8922f-17e5-482e-8a1b-acccd819c622@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17789,7 +17789,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagSpain",
+    "_name": "HairBrownSpiky",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -17821,8 +17821,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.9904862579281184,
+      "y": 0.9904862579281184,
       "z": 1
     },
     "_mobility": 0,
@@ -17847,8 +17847,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 595,
-      "height": 945
+      "width": 384,
+      "height": 946
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17878,7 +17878,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "3c504164-63f5-4e02-9f27-e08c61116e91@f9941",
+      "__uuid__": "af64c276-54b7-4cf2-a7b5-6ad51a3a758d@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17898,14 +17898,14 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagPortugal",
+    "_name": "HairShortBlackCurls",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 753
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 761
@@ -17930,8 +17930,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9978880675818373,
-      "y": 0.9978880675818373,
+      "x": 0.9801255230125523,
+      "y": 0.9801255230125523,
       "z": 1
     },
     "_mobility": 0,
@@ -17956,8 +17956,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 416,
-      "height": 947
+      "width": 384,
+      "height": 956
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17987,7 +17987,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "1b60d79d-f86e-479d-a062-5995a320eb6d@f9941",
+      "__uuid__": "b5d4bba0-5c18-4284-9532-f96b64f992b7@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -18007,7 +18007,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "France",
+    "_name": "HairBrownSidePart",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -18039,8 +18039,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.0183189655172413,
-      "y": 1.0183189655172413,
+      "x": 0.9852786540483701,
+      "y": 0.9852786540483701,
       "z": 1
     },
     "_mobility": 0,
@@ -18065,8 +18065,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 611,
-      "height": 928
+      "width": 387,
+      "height": 951
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -18096,7 +18096,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "e9d71e10-02f5-4d6f-87b0-714b8811f27c@f9941",
+      "__uuid__": "812b4ab1-f654-4b60-9731-a4f5585b4786@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -18116,7 +18116,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagArgentina",
+    "_name": "HairBlondSideSwept",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -18135,7 +18135,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 61.666,
+      "x": 0,
       "y": -0.001,
       "z": 0
     },
@@ -18148,8 +18148,8 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 0.9535822401614531,
-      "y": 0.9535822401614531,
+      "x": 0.9821802935010482,
+      "y": 0.9821802935010482,
       "z": 1
     },
     "_mobility": 0,
@@ -18174,8 +18174,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 547,
-      "height": 991
+      "width": 469,
+      "height": 954
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -18205,7 +18205,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "1186aa63-4fd1-4b67-b159-44a8c49fa9e3@f9941",
+      "__uuid__": "880d56c7-7bc3-4885-8433-49ba6c805114@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -18241,8 +18241,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -25.2,
-      "y": 282.8,
+      "x": 5.769,
+      "y": 826.477,
       "z": 0
     },
     "_lrot": {
@@ -18302,13 +18302,13 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 541,
-      "height": 945
+      "width": 376.36820083682005,
+      "height": 937
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.3909722735674676,
-      "y": 0.0000010582010582010582
+      "x": 0.5,
+      "y": 0
     },
     "_id": "1aiqhWZA1EPJGsBK0qMxl2"
   },
@@ -18342,7 +18342,7 @@
     "correctItem": {
       "__id__": 777
     },
-    "correctItemID": "FlagSpain",
+    "correctItemID": "HairBlondSideSwept",
     "flyTarget": {
       "__id__": 769
     },
@@ -18351,15 +18351,15 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagArgentina",
+    "itemID": "HairBlondSideSwept",
     "visual": {
       "__id__": 766
     },
-    "fxType": 9
+    "fxType": 8
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "France",
+    "itemID": "HairBrownSidePart",
     "visual": {
       "__id__": 763
     },
@@ -18367,15 +18367,15 @@
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagSpain",
+    "itemID": "HairBrownSpiky",
     "visual": {
       "__id__": 757
     },
-    "fxType": 8
+    "fxType": 9
   },
   {
     "__type__": "CharacterItemVisual",
-    "itemID": "FlagPortugal",
+    "itemID": "HairShortBlackCurls",
     "visual": {
       "__id__": 760
     },
@@ -18391,12 +18391,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "itemID": "FlagSpain",
-    "_id": "8egi+O/UVHkpRFU8rQi1Xt"
+    "itemID": "HairBlondSideSwept",
+    "_id": "adw4o4n4FAp76XL4igrZst"
   },
   {
     "__type__": "cc.Node",
-    "_name": "FlagSpain",
+    "_name": "HairBlondSideSwept",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -18431,9 +18431,9 @@
     },
     "_lscale": {
       "__type__": "cc.Vec3",
-      "x": 1.5,
-      "y": 1.5,
-      "z": 1.5
+      "x": 0.7,
+      "y": 0.7,
+      "z": 0.7
     },
     "_mobility": 0,
     "_layer": 33554432,
@@ -18443,7 +18443,7 @@
       "y": 0,
       "z": 0
     },
-    "_id": "3c/mXIHlZA0KV2PVJ4bImB"
+    "_id": "e2YcXsfHVPPLe22zqzgdw/"
   },
   {
     "__type__": "cc.UITransform",
@@ -18457,15 +18457,15 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 662,
-      "height": 546
+      "width": 406,
+      "height": 406
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
       "y": 0.5
     },
-    "_id": "e8vg0qkj1FnZiY8yJ55p2g"
+    "_id": "0b/I+UPwVE6at1NWxrXWY6"
   },
   {
     "__type__": "cc.Sprite",
@@ -18488,7 +18488,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "325ead8e-ae51-41d4-961a-6350abd5850c@f9941",
+      "__uuid__": "932ca6e3-ce5c-4912-8e21-5191aed0bfaf@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -18504,7 +18504,7 @@
     "_isTrimmedMode": true,
     "_useGrayscale": false,
     "_atlas": null,
-    "_id": "7dwkCXkB5CZI/lUbU2oJpy"
+    "_id": "04pARdkwVNTYz9BqP9USJm"
   },
   {
     "__type__": "cc.Node",
@@ -19070,8 +19070,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 648,
-      "height": 560
+      "width": 380,
+      "height": 328
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
