@@ -15897,8 +15897,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 178,
-      "height": 128
+      "width": 694,
+      "height": 695
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -15928,7 +15928,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "b6b9cc89-7bc2-47ac-81d7-f09d5153086e@f9941",
+      "__uuid__": "932ca6e3-ce5c-4912-8e21-5191aed0bfaf@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -17562,8 +17562,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 178,
-      "height": 128
+      "width": 767,
+      "height": 658
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -17593,7 +17593,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "3d6898e7-3e0c-45bc-b543-b9e0731bad8f@f9941",
+      "__uuid__": "31342a8f-409e-4b24-9e7e-9e3096c6437a@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -18457,8 +18457,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 178,
-      "height": 128
+      "width": 662,
+      "height": 546
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -18488,7 +18488,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "5d0b573a-2769-42b5-93f9-a56fd6f1de10@f9941",
+      "__uuid__": "325ead8e-ae51-41d4-961a-6350abd5850c@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -19070,8 +19070,8 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 178,
-      "height": 128
+      "width": 648,
+      "height": 560
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -19101,7 +19101,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "eb745a9f-4832-43b2-808e-007d9d184d0c@f9941",
+      "__uuid__": "54e7412a-3b61-421c-b570-8fa0376e397c@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
