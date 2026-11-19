@@ -4,7 +4,7 @@
     "totalTime": 500,
     "logo": {
       "type": "custom",
-      "image": "project://settings/rounded 4.5.png"
+      "image": "project://settings/Goat Outfit Rounded.png"
     },
     "background": {
       "type": "color",
@@ -15,7 +15,7 @@
         "w": 1
       }
     },
-    "displayRatio": 1
+    "displayRatio": 1.2
   },
   "textureCompressConfig": {
     "userPreset": {
