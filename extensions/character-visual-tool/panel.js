@@ -20,7 +20,10 @@ exports.template = `
 <div class="cvt" tabindex="0">
     <div class="head">
         <div><b id="ownerName">(chọn 1 node trong Hierarchy)</b> <span class="sub" id="ownerKind"></span></div>
-        <label class="chk" title="Bật / tắt node này"><input type="checkbox" id="ownerActive"> Bật</label>
+        <div class="head-actions">
+            <label class="chk" title="Bật / tắt node này"><input type="checkbox" id="ownerActive"> Bật</label>
+            <button type="button" id="pinBtn" aria-pressed="false" hidden>📌 Ghim</button>
+        </div>
     </div>
     <div class="line" id="correctRow">
         <span>✓ Món đúng:</span>
@@ -69,6 +72,9 @@ exports.style = `
        display: flex; flex-direction: column; gap: 8px; }
 .cvt .head, .cvt .bar, .cvt .line { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 .cvt .head { justify-content: space-between; }
+.cvt .head-actions { display: flex; gap: 6px; align-items: center; }
+.cvt #pinBtn { color: inherit; font: inherit; background: #393939; border: 1px solid #555; border-radius: 3px; padding: 2px 6px; cursor: pointer; }
+.cvt #pinBtn[aria-pressed="true"] { background: #254967; border-color: #2f8ae0; }
 .cvt .line ui-input { flex: 1; min-width: 160px; }
 .cvt .sub { opacity: .6; font-size: 11px; }
 .cvt code { background: #333; padding: 0 3px; border-radius: 3px; }
@@ -96,12 +102,42 @@ exports.style = `
 `;
 
 exports.$ = {
-    root: '.cvt', ownerName: '#ownerName', ownerKind: '#ownerKind', ownerActive: '#ownerActive',
+    root: '.cvt', ownerName: '#ownerName', ownerKind: '#ownerKind', ownerActive: '#ownerActive', pinBtn: '#pinBtn',
     optOnion: '#optOnion', optAutoFit: '#optAutoFit', optAutoSave: '#optAutoSave', normalizeBtn: '#normalizeBtn',
     cards: '#cards', folder: '#folder', pickFolder: '#pickFolder', optNormalizeAll: '#optNormalizeAll',
     checkByName: '#checkByName', runByName: '#runByName', byNameReport: '#byNameReport', msg: '#msg',
     items: '#items', optSyncId: '#optSyncId', optAutoName: '#optAutoName', nameAllBtn: '#nameAllBtn', correctRow: '#correctRow', correctSelect: '#correctSelect',
 };
+
+function bindWindowPin(button) {
+    if (!window.location.pathname.endsWith('/static/windows/sub.html')) return;
+    const win = window.require('@electron/remote').getCurrentWindow();
+
+    let originalClosable = null;
+    const unpin = () => {
+        if (originalClosable === null || win.isDestroyed()) return;
+        win.setClosable(originalClosable);
+        originalClosable = null;
+    };
+    const render = () => {
+        const pinned = originalClosable !== null;
+        button.setAttribute('aria-pressed', String(pinned));
+        button.textContent = pinned ? '📌 Bỏ ghim' : '📌 Ghim';
+        button.title = pinned ? 'Bỏ ghim để đóng cửa sổ' : 'Khóa nút đóng cửa sổ';
+    };
+    button.addEventListener('click', () => {
+        if (originalClosable !== null) {
+            unpin();
+        } else {
+            originalClosable = win.isClosable();
+            win.setClosable(false);
+        }
+        render();
+    });
+    render();
+    button.hidden = false;
+    return unpin;
+}
 
 /** 'item_water_bottle' -> 'WaterBottle'; ảnh không theo quy ước item_ thì trả về ''. */
 function nameFromImage(base) {
@@ -487,6 +523,12 @@ exports.methods = {
 };
 
 exports.ready = function () {
+    try {
+        this._unpinWindow = bindWindowPin(this.$.pinBtn);
+    } catch (error) {
+        console.warn('Character Visual Tool: không thể ghim cửa sổ', error);
+    }
+
     settings = loadSettings();
     this.$.optOnion.value = settings.onion;
     this.$.optAutoFit.value = settings.autoFit;
@@ -551,6 +593,7 @@ exports.ready = function () {
 };
 
 exports.close = function () {
+    this._unpinWindow?.();
     Editor.Message.removeBroadcastListener('selection:select', this._onSelect);
     Editor.Message.removeBroadcastListener('scene:change-node', this._onChange);
     callScene('removeOnion').catch(() => {});
