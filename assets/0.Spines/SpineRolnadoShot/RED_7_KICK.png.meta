@@ -2,7 +2,7 @@
   "ver": "1.0.27",
   "importer": "image",
   "imported": true,
-  "uuid": "d8199a90-fa43-4b61-9223-6e776f4df031",
+  "uuid": "47bc037a-6e60-4d92-8074-66c90eef3125",
   "files": [
     ".json",
     ".png"
@@ -10,14 +10,14 @@
   "subMetas": {
     "6c48a": {
       "importer": "texture",
-      "uuid": "d8199a90-fa43-4b61-9223-6e776f4df031@6c48a",
+      "uuid": "47bc037a-6e60-4d92-8074-66c90eef3125@6c48a",
       "displayName": "RED_7_KICK",
       "id": "6c48a",
       "name": "texture",
       "userData": {
         "wrapModeS": "clamp-to-edge",
         "wrapModeT": "clamp-to-edge",
-        "imageUuidOrDatabaseUri": "d8199a90-fa43-4b61-9223-6e776f4df031",
+        "imageUuidOrDatabaseUri": "47bc037a-6e60-4d92-8074-66c90eef3125",
         "isUuid": true,
         "visible": false,
         "minfilter": "linear",
@@ -34,7 +34,7 @@
     },
     "f9941": {
       "importer": "sprite-frame",
-      "uuid": "d8199a90-fa43-4b61-9223-6e776f4df031@f9941",
+      "uuid": "47bc037a-6e60-4d92-8074-66c90eef3125@f9941",
       "displayName": "RED_7_KICK",
       "id": "f9941",
       "name": "spriteFrame",
@@ -113,7 +113,7 @@
           ]
         },
         "isUuid": true,
-        "imageUuidOrDatabaseUri": "d8199a90-fa43-4b61-9223-6e776f4df031@6c48a",
+        "imageUuidOrDatabaseUri": "47bc037a-6e60-4d92-8074-66c90eef3125@6c48a",
         "atlasUuid": "",
         "trimType": "auto"
       },
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "fixAlphaTransparencyArtifacts": false,
     "hasAlpha": true,
-    "redirect": "d8199a90-fa43-4b61-9223-6e776f4df031@6c48a"
+    "redirect": "47bc037a-6e60-4d92-8074-66c90eef3125@6c48a"
   }
 }
