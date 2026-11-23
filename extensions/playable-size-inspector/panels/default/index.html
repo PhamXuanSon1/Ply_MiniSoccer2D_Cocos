@@ -1,0 +1,284 @@
+<section class="page">
+  <header class="topbar">
+    <nav class="steps">
+      <button id="step-overview" class="step" data-step="overview" title="Bản build nặng bao nhiêu, phần nào nặng, nên làm gì trước">
+        <span class="step-num">1</span><span class="step-text"><b>Tổng quan</b><small>Nặng bao nhiêu, nên làm gì</small></span>
+      </button>
+      <span class="step-arrow">›</span>
+      <button id="step-explore" class="step" data-step="explore" title="Từng file trong build: nó là gì, từ asset nào ra, ai kéo nó vào">
+        <span class="step-num">2</span><span class="step-text"><b>Tìm chỗ nặng</b><small>Từng file và nguồn của nó</small></span>
+      </button>
+      <span class="step-arrow">›</span>
+      <button id="step-optimize" class="step" data-step="optimize" title="Bật nén ảnh, chuyển / nén / cắt âm thanh, nén mesh / giảm tam giác model 3D trong assets/, tắt module engine không dùng">
+        <span class="step-num">3</span><span class="step-text"><b>Tối ưu</b><small>Ảnh, âm thanh, model 3D, module engine</small></span>
+      </button>
+    </nav>
+    <div class="topbar-right">
+      <button id="history-button" class="history-button" title="Các thay đổi tool đã ghi vào assets/ và Feature Cropping (nén ảnh, nén / cắt audio, model 3D, module engine). Hoàn tác được từng lần.">
+        Lịch sử <span id="history-count" class="badge hidden"></span>
+      </button>
+      <label class="field build-root" title="Thư mục build web-mobile, tính từ thư mục project. Đổi xong nhấn Enter.">
+        <span>Thư mục build</span>
+        <ui-input id="build-root-input" value="build/web-mobile"></ui-input>
+        <select id="build-pick" class="build-pick hidden" title="Các bản build có trong thư mục build/ (mới nhất trước)"></select>
+      </label>
+      <ui-button id="scan-button" class="primary" title="Quét lại bản build + ảnh, âm thanh, model 3D nguồn + module engine. Tool cũng tự chạy khi mở panel và khi có bản build mới.">Phân tích lại</ui-button>
+    </div>
+  </header>
+
+  <div id="history-pop" class="history-pop hidden"></div>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <section id="content" class="content">
+    <div class="main-column">
+      <div id="panel-overview" class="tab-panel">
+        <div id="overview" class="panel-body"></div>
+      </div>
+
+      <div id="panel-explore" class="tab-panel">
+        <div class="subnav">
+          <div id="explore-source" class="segmented big">
+            <button data-source="build" title="Thư mục build web-mobile (trước khi playable-ads-builder đóng gói)">Build web-mobile <span id="explore-size-build" class="seg-count"></span></button>
+            <button data-source="html" title="File HTML / zip cuối gửi cho mạng quảng cáo: ảnh đã nén WebP, audio encode lại, tất cả gói zip">HTML cuối <span id="explore-size-html" class="seg-count"></span></button>
+          </div>
+          <select id="explore-export" class="exp-pick hidden" title="Đọc số liệu từ file của mạng nào (hoặc ước tính khi chưa xuất)"></select>
+          <span id="explore-source-hint" class="subnav-hint"></span>
+        </div>
+        <div class="toolbar">
+          <div class="toolbar-group grow">
+            <input id="explore-search" class="search-input" type="search" placeholder="Tìm theo tên file hoặc asset nguồn: Logo, .mp3, Bear.prefab...">
+          </div>
+          <div class="toolbar-group">
+            <div id="explore-group" class="segmented">
+              <button data-group="list" title="Từng thứ trong build (asset của dự án, thứ của engine) kèm lý do và cách giảm">Danh sách</button>
+              <button data-group="file" title="Đường dẫn kỹ thuật của từng file trong thư mục build">Từng file build</button>
+            </div>
+          </div>
+        </div>
+        <div id="explore-filters" class="filter-row"></div>
+        <div id="explore-list" class="panel-body"></div>
+      </div>
+
+      <div id="panel-optimize" class="tab-panel">
+        <div class="subnav">
+          <div id="optimize-kind" class="segmented big">
+            <button data-kind="texture">Ảnh <span id="opt-count-texture" class="seg-count"></span></button>
+            <button data-kind="audio">Âm thanh <span id="opt-count-audio" class="seg-count"></span></button>
+            <button data-kind="model" title="Model 3D: nén mesh (Quantize / Encode) và giảm tam giác">Model 3D <span id="opt-count-model" class="seg-count"></span></button>
+            <button data-kind="engine" title="Module engine (Project Settings → Feature Cropping): tắt module không dùng để giảm mã engine">Module engine <span id="opt-count-engine" class="seg-count"></span></button>
+          </div>
+        </div>
+
+        <div id="panel-texture" class="opt-panel">
+          <div class="toolbar">
+            <div id="tex-filters" class="toolbar-group grow"></div>
+            <div class="toolbar-group">
+              <div id="tex-view" class="segmented" title="Cách xem: lưới ảnh thu nhỏ hoặc cây thư mục (để tick cả thư mục)">
+                <button data-view="grid">Lưới</button>
+                <button data-view="tree">Thư mục</button>
+              </div>
+              <button id="tex-select-all" class="chip-button" title="Tick mọi ảnh đang hiện">Tick hết</button>
+              <button id="tex-select-none" class="chip-button" title="Bỏ tick tất cả">Bỏ tick</button>
+              <button id="tex-expand-all" class="icon-button" title="Mở hết thư mục">⊞</button>
+              <button id="tex-collapse-all" class="icon-button" title="Thu hết thư mục">⊟</button>
+              <button id="tex-help-toggle" class="icon-button help-toggle" title="Hướng dẫn">?</button>
+            </div>
+          </div>
+
+          <div class="action-bar top">
+            <div class="action-info">
+              <span id="tex-summary" class="action-main"></span>
+              <span id="tex-preset-hint" class="action-hint"></span>
+            </div>
+            <div class="action-controls">
+              <label id="tex-preset-row" class="field">
+                <span>Preset</span>
+                <select id="tex-preset" title="Preset nén (Project Settings → Texture Compress)"></select>
+                <button id="tex-reload-presets" class="icon-button" title="Đọc lại preset từ Project Settings">↻</button>
+              </label>
+              <button id="tex-disable" class="action-btn" title="Bỏ Texture Compress khỏi các ảnh đã tick">Tắt nén</button>
+              <button id="tex-apply" class="action-btn primary" title="Bật Texture Compress với preset đang chọn cho các ảnh đã tick">Bật nén</button>
+            </div>
+          </div>
+          <div id="tex-help" class="help-box hidden">
+            <p><b>Cách dùng:</b> tick ảnh → chọn preset ở thanh nén phía trên → xem dung lượng ước tính → <b>Bật nén</b>. Build lại là tool tự so trước / sau. Bộ lọc <b>Nên xử lý</b> gom đúng các ảnh mà Tổng quan → Việc nên làm nhắc tới.</p>
+            <p><b>Lưới</b>: xem ảnh thật, nhãn dưới mỗi ảnh cho biết nên làm gì (đóng gói 2 lần, chưa nén, ≈ −X% với preset đang chọn...). <b>Thư mục</b>: cây thư mục có đủ cột số liệu, tick được cả thư mục một lần.</p>
+            <p><b>Sau nén</b>: số thật Cocos đã nén ở lần build trước; dấu ≈ là số ước tính theo preset đang chọn (nén thử bằng đúng thư viện của Editor, không cần build). <b>Trong build</b>: dung lượng ảnh đó đang chiếm ở bản build web-mobile hiện tại (chưa zip; đây là số chính của tab, lưới sắp theo nó). Ảnh không vào build thì ô ghi <i>nguồn X</i>.</p>
+            <p>Preset tạo trong <b>Project Settings → Texture Compress</b>, bấm ↻ nếu vừa tạo. Preset chưa chọn định dạng nào hiện là <i>(chưa cấu hình định dạng)</i> và không áp được; ảnh trỏ tới preset đã xoá hiện <i>(preset đã xoá)</i>, lọc nhanh bằng chip <b>Preset đã xoá</b>. Phím tắt: <b>← → ↑ ↓</b> chuyển ảnh · <b>Space</b> tick · <b>Enter</b> / nháy đúp chọn asset trong panel Assets.</p>
+          </div>
+          <div id="tex-issues" class="issues hidden"></div>
+
+          <div id="tex-tree-head" class="tree-head">
+            <span class="col-asset">Ảnh</span>
+            <span class="col-kind">Kiểu</span>
+            <span class="col-preset">Preset</span>
+            <span class="col-compressed num" title="Số thật Cocos đã nén ở lần build trước; dấu ≈ là ước tính theo preset đang chọn">Sau nén</span>
+            <span class="col-build num" title="Dung lượng ảnh trong bản build web-mobile hiện tại (chưa zip); số màu là chênh lệch so với lần build trước">Trong build</span>
+            <span class="col-source num" title="Dung lượng file ảnh nguồn trong assets/">Nguồn</span>
+          </div>
+          <div id="tex-tree" class="tree panel-body hidden"></div>
+          <div id="tex-grid" class="tex-grid panel-body hidden"></div>
+        </div>
+
+        <div id="panel-audio" class="opt-panel">
+          <div class="toolbar">
+            <div id="aud-filters" class="toolbar-group grow"></div>
+            <div class="toolbar-group">
+              <button id="aud-select-all" class="chip-button" title="Tick mọi file đang hiện">Tick hết</button>
+              <button id="aud-select-none" class="chip-button" title="Bỏ tick tất cả">Bỏ tick</button>
+              <button id="aud-help-toggle" class="icon-button help-toggle" title="Hướng dẫn">?</button>
+            </div>
+          </div>
+
+          <div class="action-bar top">
+            <div class="action-info">
+              <span id="aud-summary" class="action-main"></span>
+              <span id="aud-builder-note" class="action-hint"></span>
+            </div>
+            <div class="action-controls">
+              <div id="aud-presets" class="preset-cards"></div>
+              <button id="aud-convert" class="action-btn primary">Nén</button>
+            </div>
+            <div id="aud-custom" class="custom-row hidden">
+              <label class="field"><span>Bitrate</span><select id="aud-bitrate"></select></label>
+              <label class="field"><span>Tần số</span><select id="aud-sample-rate"></select></label>
+              <label class="check" title="Trộn stereo về 1 kênh: cùng bitrate thì chất lượng tốt hơn, đổi lại mất hiệu ứng trái/phải."><input type="checkbox" id="aud-mono" checked> Mono</label>
+              <label class="check" title="Chỉ áp dụng khi đổi đuôi (wav/ogg… → mp3) mà cạnh đó đã có MP3 trùng tên nhưng là asset khác — MP3 cũ sẽ bị xoá."><input type="checkbox" id="aud-overwrite" checked> Ghi đè MP3 trùng tên</label>
+            </div>
+          </div>
+          <div id="aud-help" class="help-box hidden">
+            <p><b>Cách dùng:</b> lọc <b>Trong build</b> (mặc định khi đã có bản build) → tick file → chọn một kiểu nén ở thanh trên → <b>Nén</b>. Thông số chỉ có một bộ: thẻ điền vào cả hàng <b>Tùy chỉnh</b> lẫn khung <b>Nén file này</b> bên phải, sửa ô ở đâu thì thẻ thành <b>Tùy chỉnh</b>; Nén hàng loạt, Nghe thử và áp từng file đều dùng đúng bộ đó (riêng đoạn cắt là của từng file). File gốc được <b>thay thế</b> nhưng giữ uuid nên scene / prefab không phải sửa; bản gốc chép dự phòng vào <code>temp/playable-size-inspector/audio-backup/</code>. Kết quả không nhỏ hơn thì giữ nguyên file.</p>
+            <p><b>Mono</b> (bật sẵn): cùng bitrate thì nghe sạch hơn, chỉ mất hiệu ứng trái / phải. <b>Ghi đè MP3 trùng tên</b> (trong Tùy chỉnh) chỉ có tác dụng khi đổi đuôi (wav → mp3) mà cạnh đó đã có MP3 cùng tên: MP3 cũ bị xoá, reference tới nó sẽ hỏng; các dòng này được tô cảnh báo.</p>
+            <p><b>Cắt bớt độ dài:</b> chọn một file, khung bên phải có waveform: kéo hai mốc vàng (hoặc nhấn <b>[</b> / <b>]</b>, <b>I</b> / <b>O</b> khi đang nghe) để chọn đoạn giữ lại, thêm Fade out vài chục ms nếu cắt ngang lúc còn tiếng. <b>Nghe thử kết quả</b> encode vào <code>temp/</code> để nghe trước, chưa đụng tới <code>assets/</code>.</p>
+            <p><b>▶</b> ở đầu dòng nghe nhanh ngay (phím <b>P</b>). Có bản build thì cột dung lượng là <b>Trong build</b> và danh sách xếp theo số đó; file không vào bản build ghi <i>không vào build</i> (nén cũng không đổi gì, lọc nhanh bằng chip <b>Không vào build</b>), dung lượng nguồn xem trong tooltip. Cột <b>Nhận xét</b> chỉ ghi điều nên sửa (chưa MP3, stereo, bitrate cao, dài, trùng tên); không có gì thì là <b>ổn</b>. Stereo / bitrate cao chỉ là cảnh báo khi nén lại thật sự nhỏ đi, không thì chỉ là ghi chú; chip <b>&gt; N kbps</b> lấy N theo bitrate playable-ads-builder (không có thì 64).</p>
+            <p>Phím tắt: <b>↑ ↓</b> chuyển dòng · <b>Space</b> tick · <b>P</b> nghe nhanh · <b>Enter</b> / nháy đúp chọn asset trong panel Assets.</p>
+          </div>
+          <div id="aud-issues" class="issues hidden"></div>
+          <div id="aud-list" class="panel-body hidden"></div>
+
+        </div>
+
+        <div id="panel-model" class="opt-panel">
+          <div class="toolbar">
+            <div id="mdl-filters" class="toolbar-group grow"></div>
+            <div class="toolbar-group">
+              <button id="mdl-select-all" class="chip-button" title="Tick mọi model đang hiện">Tick hết</button>
+              <button id="mdl-select-none" class="chip-button" title="Bỏ tick tất cả">Bỏ tick</button>
+              <button id="mdl-help-toggle" class="icon-button help-toggle" title="Hướng dẫn">?</button>
+            </div>
+          </div>
+
+          <div class="action-bar top">
+            <div class="action-info">
+              <span id="mdl-summary" class="action-main"></span>
+              <span id="mdl-bulk-hint" class="action-hint"></span>
+            </div>
+            <div class="action-controls">
+              <div id="mdl-presets" class="preset-cards"></div>
+              <button id="mdl-bulk-apply" class="action-btn primary">Apply</button>
+            </div>
+          </div>
+          <div id="mdl-help" class="help-box hidden">
+            <p><b>Cách dùng:</b> lọc <b>Trong build</b> (mặc định) → <b>Tick hết</b> hoặc tick từng model → chọn preset ở thanh trên (<b>Recommended</b> / <b>Compress only</b> / <b>Quantize only</b>, form ở khung Chi tiết được điền sẵn và khung xem trước thấy ngay) → <b>Apply (N)</b> → chờ editor import xong → build lại. Mỗi lần Apply có trong <b>Lịch sử</b> để hoàn tác. Bộ lọc <b>Nên xử lý</b> gom đúng các model mà Tổng quan → Việc nên làm nhắc tới (chưa nén mesh, nhiều tam giác mà chưa giảm). Muốn chỉnh riêng một model: chọn nó, sửa form <b>Import Settings</b> ở khung Chi tiết (thẻ preset thành <b>Tùy chỉnh</b>) rồi Apply. Ô nào các model đang khác nhau thì checkbox gạch ngang, ô số hiện —; không sửa thì giữ giá trị riêng của từng model.</p>
+            <p><b>Mesh Compress</b> · <b>Quantize</b>: lưu đỉnh bằng định dạng ít bit hơn, GPU đọc thẳng, mesh nhỏ khoảng một nửa. <b>Encode</b>: mã hoá meshopt để zip nén rất tốt (thường nhỏ 3–5 lần sau zip), lúc load phải giải mã nên cần module <b>meshopt</b> (ẩn trong Feature Cropping, Apply tự bật). <b>Compress</b> (zlib) thừa với playable vì bản xuất đã zip toàn bộ.</p>
+            <p><b>Mesh Simplify</b>: bỏ bớt tam giác, giữ hình gần giống. <b>Target Ratio</b> = tỉ lệ giữ lại; <b>Auto Error Rate</b> để meshoptimizer tự chọn sai lệch; <b>Lock Boundary</b> giữ nguyên mép hở. Khung xem trước chạy cùng meshoptimizer của editor trên dữ liệu gốc của model: kéo để xoay, lăn để zoom, nháy đúp để đặt lại. Va chạm không đổi nếu collider là hình hộp / cầu.</p>
+            <p>Dung lượng mỗi dòng là <b>≈ X sau zip</b>: mesh nén deflate như trong file zip / HTML gửi mạng (mesh chưa nén gần như không giảm, mesh Encode giảm nhiều), danh sách sắp theo số này; số trong build (chưa zip, như tab Ảnh / Tổng quan) ở tooltip và mục Số liệu.</p>
+            <p>Phím: <b>↑ ↓</b> chuyển dòng · <b>Space</b> tick · nháy đúp chọn model trong panel Assets.</p>
+          </div>
+          <div id="mdl-issues" class="issues hidden"></div>
+          <div id="mdl-list" class="panel-body"></div>
+
+          <!-- Form giống Inspector → Model: model-tab.js gắn vào khung Chi tiết (renderDetail). -->
+          <div class="hidden">
+            <div id="mdl-settings" class="mdl-settings">
+              <div class="mdl-settings-head">
+                <div class="mdl-settings-title">
+                  <span class="mdl-settings-label">Import Settings</span>
+                  <span id="mdl-target" class="mdl-target"></span>
+                </div>
+                <div class="mdl-settings-buttons">
+                  <button id="mdl-revert" class="action-btn small" title="Bỏ các ô vừa sửa, trở về thiết lập đang lưu">Revert</button>
+                  <button id="mdl-apply" class="action-btn small primary" title="Ghi vào .meta của model">Apply</button>
+                </div>
+              </div>
+              <div class="mdl-section">
+                <label class="check mdl-section-title" title="Nén dữ liệu đỉnh / chỉ số của mesh lúc import"><input type="checkbox" id="mdl-c-enable"> Mesh Compress</label>
+                <div id="mdl-c-fields" class="mdl-fields">
+                  <label class="check" title="Lưu đỉnh bằng định dạng ít bit hơn (half float...), GPU đọc thẳng, không cần thêm module. Mesh nhỏ khoảng một nửa."><input type="checkbox" id="mdl-c-quantize"> Quantize</label>
+                  <label class="check" title="Mã hoá meshoptimizer: zip nén rất tốt (thường nhỏ 3–5 lần sau zip). Lúc load phải giải mã nên cần module meshopt (~5 KB); Apply tự bật."><input type="checkbox" id="mdl-c-encode"> Encode</label>
+                  <label class="check" title="Nén zlib cả khối. Thừa với playable vì bản xuất đã zip toàn bộ, còn tốn thời gian load."><input type="checkbox" id="mdl-c-compress"> Compress</label>
+                </div>
+                <div class="mdl-project-row">
+                  <label class="check" title="Module engine meshopt (ẩn trong Project Settings → Feature Cropping): giải mã mesh đã Encode lúc chạy, ~5 KB. Tắt mà có model Encode thì build lỗi 16352 và các model đó không hiện. Ghi ngay vào Project Settings (không cần Apply), hoàn tác được trong Lịch sử."><input type="checkbox" id="mdl-meshopt"> Meshopt Module</label>
+                  <span class="mdl-tag" title="Thiết lập của cả dự án (Feature Cropping): ghi ngay, không chờ Apply">dự án</span>
+                  <span id="mdl-meshopt-note" class="mdl-option-note"></span>
+                </div>
+              </div>
+              <div class="mdl-section">
+                <label class="check mdl-section-title" title="Giảm số tam giác lúc import, giữ hình gần giống"><input type="checkbox" id="mdl-s-enable"> Mesh Simplify</label>
+                <div id="mdl-s-fields" class="mdl-fields">
+                  <label class="mdl-field mdl-field-wide" title="Tỉ lệ tam giác giữ lại (0.01 – 1). Kéo để xem trước ngay phía trên.">
+                    <span>Target Ratio</span>
+                    <input id="mdl-s-ratio" class="mdl-slider" type="range" min="0.01" max="1" step="0.01" value="1">
+                    <input id="mdl-s-ratio-num" class="mdl-num" type="number" min="0.01" max="1" step="0.01" value="1">
+                  </label>
+                  <label class="check" title="Để meshoptimizer tự chọn mức sai lệch cho phép (mặc định của Cocos)"><input type="checkbox" id="mdl-s-auto"> Auto Error Rate</label>
+                  <label class="mdl-field" title="Mức sai lệch hình tối đa (0 – 1) khi tắt Auto Error Rate; nhỏ thì giữ hình hơn nhưng có thể không đạt Target Ratio">
+                    <span>Error Rate</span>
+                    <input id="mdl-s-error" class="mdl-num" type="number" min="0" max="1" step="0.01" value="1">
+                  </label>
+                  <label class="check" title="Không di chuyển các cạnh biên (mép hở của mesh), tránh lủng lỗ / tách đường may UV"><input type="checkbox" id="mdl-s-lock"> Lock Boundary</label>
+                </div>
+              </div>
+              <div id="mdl-form-note" class="action-hint"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="panel-engine" class="opt-panel">
+          <div class="action-bar top">
+            <div class="action-info">
+              <span id="eng-summary" class="action-main"></span>
+              <span class="action-hint">Ghi vào Project Settings → Feature Cropping, hoàn tác được trong Lịch sử. Build lại để thấy giảm bao nhiêu.</span>
+            </div>
+            <div class="action-controls">
+              <button id="eng-suggest" class="action-btn" title="Chọn sẵn tắt mọi module không thấy dùng (chưa ghi gì)">Chọn tắt module không dùng</button>
+              <button id="eng-reset" class="action-btn hidden" title="Bỏ các thay đổi chưa áp dụng">Bỏ chọn</button>
+              <button id="eng-apply" class="action-btn primary">Áp dụng</button>
+            </div>
+          </div>
+          <div class="toolbar">
+            <div class="toolbar-group grow">
+              <label class="check" title="Bỏ tick để chỉ xem module đang bật (và module đang tắt mà thấy dùng)"><input type="checkbox" id="eng-show-all" checked> Hiện cả module đang tắt</label>
+            </div>
+            <div class="toolbar-group">
+              <button id="eng-open-settings" class="chip-button" title="Mở Project Settings → Feature Cropping">Mở Feature Cropping</button>
+              <button id="eng-help-toggle" class="icon-button help-toggle" title="Hướng dẫn">?</button>
+            </div>
+          </div>
+          <div id="eng-help" class="help-box hidden">
+            <p><b>Cách dùng:</b> gạt công tắc module muốn tắt / bật (hoặc bấm <b>Chọn tắt module không dùng</b>) → <b>Áp dụng</b> → build lại. Tool ghi đúng như Project Settings → Feature Cropping, mỗi lần áp dụng có trong <b>Lịch sử</b> để hoàn tác.</p>
+            <p><b>Không thấy dùng</b>: không có component trong scene / prefab, script hay file nào trong assets/ dùng tới module. <b>Đang tắt nhưng thấy dùng</b>: có chỗ dùng mà module đang tắt, nên kiểm tra lại vì game có thể lỗi khi chạy tới đó.</p>
+            <p>Cột dung lượng (<b>X trong build</b>) là phần của module trong bản build web-mobile, chưa zip: file engine riêng (wasm / js của Spine, Box2D, Ammo...), hoặc phần ước tính (≈) khi nằm chung pack như Post Process. Để trống là mã nằm chung file engine: build lại sau khi tắt để biết giảm bao nhiêu.</p>
+            <p>Chỉ liệt kê module có dấu hiệu sử dụng rõ ràng (Post Process, Animation Graph, Physics, Spine, Particle...). Module nền (2D, 3D, UI, Audio...) đổi trong Feature Cropping. Phím: <b>↑ ↓</b> chuyển dòng · <b>Space</b> gạt công tắc.</p>
+          </div>
+          <div id="eng-issues" class="issues hidden"></div>
+          <div id="eng-list" class="panel-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="detail-pane">
+      <div class="pane-head">Chi tiết</div>
+      <div id="detail" class="detail empty"><span>Chọn một dòng để xem chi tiết.</span></div>
+    </aside>
+  </section>
+
+  <footer class="statusbar">
+    <span id="status" class="status">Đang chuẩn bị...</span>
+    <button id="status-undo" class="status-undo hidden" title="Hoàn tác thay đổi vừa rồi">Hoàn tác</button>
+    <span id="summary" class="summary"></span>
+    <span id="tool-version" class="tool-version"></span>
+  </footer>
+</section>
