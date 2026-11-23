@@ -1,6 +1,7 @@
 import { _decorator, Camera, CCObject, Color, Component, EventMouse, EventTouch, input, Input, js, Node, Tween, tween, Vec2, Vec3 } from 'cc';
 import type { Graphics } from 'cc';
 import { EDITOR, PREVIEW } from 'cc/env';
+import { FxType, Ply_SoundManager } from '../ScriptTemplate/Ply_SoundManager';
 import { RonaldoKick } from './RonaldoKick';
 const { ccclass, executeInEditMode, property } = _decorator;
 const EDIT_MODE = EDITOR && !PREVIEW;
@@ -13,9 +14,10 @@ function wrapAngle(angle: number) {
 
 /**
  * Sút bóng kiểu ná cao su.
- *  - Nhấn: lấy điểm bắt đầu kéo.
- *  - Kéo xuống: sút ngược hướng kéo. Kéo lên: sút cùng hướng kéo.
- *    Lực = độ dài kéo theo chiều dọc / maxDrag (0..1). Kéo ngang không sút.
+ *  - Nhấn: neo kéo tại quả bóng, vector kéo = điểm chạm - bóng.
+ *  - Tay ở trên bóng: điểm rơi = đúng vị trí tay (tay tới đâu aim line tới đó).
+ *  - Tay ở dưới bóng: kiểu ná, độ xa theo độ dài kéo dọc, trái/phải theo X của tay.
+ *  - restrictToTargetArea: kẹp điểm rơi vào trong vùng Target Area.
  *  - Thả: bóng bay theo đúng đường parabol của Line, vừa bay vừa xoay và giảm scale 1 -> endScale.
  *
  * Gắn lên node Aim (cùng cha với Ball). Line là con của Aim, mỗi node con của Line là 1 chấm (vd ParticleSystem2D).
@@ -45,7 +47,10 @@ export class SlingshotShooter extends Component {
     @property({ tooltip: 'Độ dài kéo theo chiều dọc (toạ độ local) ứng với lực tối đa' })
     maxDrag: number = 450;
 
-    @property({ tooltip: 'Lực tối thiểu (0..1) để được tính là 1 cú sút; nhỏ hơn thì huỷ' })
+    @property({ min: 1, tooltip: 'Khoảng cách tối thiểu từ tay tới bóng (toạ độ local) để bắt đầu ngắm' })
+    minDrag: number = 24;
+
+    @property({ tooltip: 'Lực tối thiểu (0..1) của cú sút sau khi vượt ngưỡng kéo' })
     minPower: number = 0.15;
 
     @property({ min: 0, step: 0.01, tooltip: 'Thời gian làm mượt góc ngắm trái/phải (giây). 0 = bám ngay.' })
@@ -104,6 +109,12 @@ export class SlingshotShooter extends Component {
     @property({ tooltip: 'Tự đặt lại bóng sau N giây khi bay xong (-1 = không, chỉ sút 1 lần)' })
     autoResetDelay: number = -1;
 
+    @property({ tooltip: 'Sút hụt: bóng tiếp tục bay ra xa và nhỏ dần cho tới khi replay' })
+    missKeepFlying = true;
+
+    @property({ min: 0, step: 0.1, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Tốc độ thu nhỏ khi sút hụt (càng lớn càng nhanh, scale nhân exp(-rate * dt))' })
+    missShrinkRate = 1.5;
+
     // ------------------------------------------------------------ hint lúc mới vào
     @property({ type: Node, tooltip: 'Điểm rơi đầu trái của hint (con của node này)' })
     pointL: Node | null = null;
@@ -120,6 +131,10 @@ export class SlingshotShooter extends Component {
     // ------------------------------------------------------------ trạng thái
     private dragging = false;
     private flying = false;
+    private missing = false;                  // sút hụt: bóng đang bay tiếp ra xa
+    private missVelocity = new Vec3();        // vận tốc (local cha của bóng) khi bắt đầu hụt
+    private missScale0 = 1;
+    private flightTween: Tween<{ t: number }> | null = null;
     private shot = false;
     private pointerId: number | null = null;   // touch id, -1 = chuột
     private startLocal = new Vec2();
@@ -213,7 +228,8 @@ export class SlingshotShooter extends Component {
         if (e.getID() !== this.pointerId) return;
         this.dragging = false;
         this.pointerId = null;
-        if (!this.hinting) this.showLine(false);
+        this.showLine(false);
+        this.startHint();
     }
 
     private onMouseDown(e: EventMouse) { if (e.getButton() === EventMouse.BUTTON_LEFT) this.begin(-1, e.getLocation()); }
@@ -228,51 +244,76 @@ export class SlingshotShooter extends Component {
             || this.ronaldoKick?.hasPendingShot) return;
         this.pointerId = id;
         this.dragging = true;
+        this.stopHint();
+        Ply_SoundManager.Ins?.playBGM();
         this.power = 0;
         this.canShoot = false;
         this.dragLocal.set(0, 0);
         this.aimDirection = null;
         if (this.ball) this.node.setPosition(this.ball.position); // gốc đường ngắm luôn ở bóng
-        this.toLocal(screen, this.startLocal);
+        // Neo kéo tại quả bóng (không phải điểm chạm đầu tiên): vector kéo = điểm chạm - bóng
+        if (this.ball) this.startLocal.set(this.ball.position.x, this.ball.position.y);
+        else this.toLocal(screen, this.startLocal);
+        this.move(screen, true);
     }
 
-    private move(screen: Vec2) {
+    private move(screen: Vec2, snapAim = false) {
         if (!this.dragging) return;
         this.toLocal(screen, this.dragLocal).subtract(this.startLocal);
-        this.updateDragAim(0);
+        this.updateDragAim(0, snapAim);
     }
 
-    private updateDragAim(dt: number) {
+    private updateDragAim(dt: number, snapAim = false) {
         this.canShoot = false;
         const { x, y } = this.dragLocal;
-        const vertical = Math.abs(y);
-        this.power = vertical < 1 ? 0 : Math.min(1, vertical / Math.max(1, this.maxDrag));
-        if (this.power === 0 || this.power < this.minPower) {
+        if (Math.hypot(x, y) < Math.max(1, this.minDrag)) {
+            this.power = 0;
             this.aimDirection = null;
-            if (!this.hinting) this.showLine(false); // chưa kéo đủ thì hint vẫn chạy
+            this.showLine(false);
             return;
-        }
-        this.stopHint(); // bắt đầu kéo thật: tắt hint, chuyển sang ná cao su
-        const targetDirection = Math.atan2(y < 0 ? -x : x, vertical);
-        if (this.aimDirection === null || this.aimSmoothTime <= 0) {
-            this.aimDirection = targetDirection;
-        } else {
-            const blend = 1 - Math.exp(-dt / this.aimSmoothTime);
-            this.aimDirection += (targetDirection - this.aimDirection) * blend;
         }
         const area = this.getTargetArea();
         const halfAngle = area.sweep / 2;
         const center = area.start + halfAngle;
-        const relative = wrapAngle(this.aimDirection - center);
-        if (this.restrictToTargetArea && Math.abs(relative) > halfAngle + 1e-6) {
-            this.showLine(false);
-            return;
+        const outerAt = (direction: number) => {
+            const rel = wrapAngle(direction - center);
+            const across = area.sweep > 0 ? Math.max(0, Math.min(1, rel / area.sweep + 0.5)) : 0.5;
+            return area.left + (area.right - area.left) * across;
+        };
+
+        // Điểm rơi mong muốn (local Aim, gốc tại bóng)
+        let tx = x, ty = y;
+        if (y < 0) {
+            // Tay dưới bóng (kiểu ná): độ xa theo độ dài kéo dọc, trái/phải vẫn theo X của tay
+            const p = Math.min(1, Math.max(this.minPower, -y / Math.max(1, this.maxDrag)));
+            const strength = this.minPower < 1 ? (p - this.minPower) / (1 - this.minPower) : 1;
+            const d = area.inner + (outerAt(Math.atan2(x, -y)) - area.inner) * strength;
+            tx = Math.max(-d, Math.min(d, x));
+            ty = Math.sqrt(d * d - tx * tx);
         }
-        const across = area.sweep > 0 ? Math.max(0, Math.min(1, relative / area.sweep + 0.5)) : 0.5;
-        const outer = area.left + (area.right - area.left) * across;
-        const strength = this.minPower < 1 ? (this.power - this.minPower) / (1 - this.minPower) : 1;
-        const distance = area.inner + (outer - area.inner) * strength;
-        this.landLocal.set(Math.sin(this.aimDirection) * distance, Math.cos(this.aimDirection) * distance, 0);
+        // Tay trên bóng: điểm rơi = đúng vị trí tay (tay tới đâu aim line tới đó)
+
+        let direction = Math.atan2(tx, ty);
+        let distance = Math.hypot(tx, ty);
+        if (this.restrictToTargetArea) {
+            // Kẹp điểm rơi vào trong vùng ngắm (gizmo Target Area)
+            const rel = Math.max(-halfAngle, Math.min(halfAngle, wrapAngle(direction - center)));
+            direction = center + rel;
+            distance = Math.max(area.inner, Math.min(outerAt(direction), distance));
+        }
+        const outer = outerAt(direction);
+        const strength = outer > area.inner ? Math.max(0, Math.min(1, (distance - area.inner) / (outer - area.inner))) : 1;
+        this.power = this.minPower + (1 - this.minPower) * strength;
+
+        tx = Math.sin(direction) * distance;
+        ty = Math.cos(direction) * distance;
+        if (snapAim || this.aimDirection === null || this.aimSmoothTime <= 0) {
+            this.landLocal.set(tx, ty, 0);
+        } else {
+            const blend = 1 - Math.exp(-dt / this.aimSmoothTime);
+            this.landLocal.set(this.landLocal.x + (tx - this.landLocal.x) * blend, this.landLocal.y + (ty - this.landLocal.y) * blend, 0);
+        }
+        this.aimDirection = direction;
         this.canShoot = true;
         this.layoutLine();
         this.showLine(true);
@@ -280,12 +321,14 @@ export class SlingshotShooter extends Component {
 
     private end(screen: Vec2) {
         if (!this.dragging) return;
-        this.move(screen);
+        this.move(screen, true);
         this.dragging = false;
         this.pointerId = null;
-        if (this.hinting) return;               // chỉ chạm/kéo ngắn: hint chạy tiếp
         this.showLine(false);
-        if (!this.canShoot || !this.ball?.parent) return;
+        if (!this.canShoot || !this.ball?.parent) {
+            this.startHint();
+            return;
+        }
         if (this.ronaldoKick?.play(() => this.launch())) return;
         this.launch();
     }
@@ -332,7 +375,7 @@ export class SlingshotShooter extends Component {
         const s1 = new Vec3(this.ballStartScale.x * this.endScale, this.ballStartScale.y * this.endScale, s0.z);
         const st = { t: 0 };
         Tween.stopAllByTarget(ball);
-        tween(st)
+        this.flightTween = tween(st)
             .to(this.flightTime, { t: 1 }, {
                 onUpdate: () => {
                     // local Aim -> world -> local cha của bóng
@@ -346,6 +389,7 @@ export class SlingshotShooter extends Component {
             })
             .call(() => this.onLanded())
             .start();
+        Ply_SoundManager.Ins?.playFx(FxType.KickBall);
     }
 
     update(dt: number) {
@@ -355,25 +399,84 @@ export class SlingshotShooter extends Component {
         }
         if (this.hinting) this.updateHint(dt);
         if (this.dragging) this.updateDragAim(dt);
-        if (this.flying && this.ball) this.ball.angle += this.spinSpeed * dt;
+        if ((this.flying || this.missing) && this.ball) this.ball.angle += this.spinSpeed * dt;
+        if (this.missing) this.updateMissFlight(dt);
+    }
+
+    /** Sút hụt: bay tiếp theo hướng cuối đường bay, càng xa càng chậm và nhỏ dần. */
+    private startMissFlight() {
+        const ball = this.ball;
+        if (!ball?.parent) return;
+        const parent = ball.parent;
+        const toParent = (t: number, out: Vec3) => {
+            this.pointAt(t, _p);
+            Vec3.transformMat4(_w, _p, this.node.worldMatrix);
+            return parent.inverseTransformPoint(out, _w);
+        };
+        const a = toParent(0.95, new Vec3()), b = toParent(1, new Vec3());
+        const dt = 0.05 * Math.max(0.01, this.flightTime);
+        this.missVelocity.set((b.x - a.x) / dt, Math.abs(b.y - a.y) / dt, 0); // luôn bay ra xa (lên trên)
+        this.missScale0 = Math.max(1e-4, ball.scale.x);
+        this.missing = true;
+    }
+
+    private updateMissFlight(dt: number) {
+        const ball = this.ball;
+        if (!ball) { this.missing = false; return; }
+        const k = Math.exp(-this.missShrinkRate * dt);
+        ball.setScale(ball.scale.x * k, ball.scale.y * k, ball.scale.z);
+        // phối cảnh: bóng càng nhỏ (càng xa) thì đi càng chậm
+        const f = ball.scale.x / this.missScale0;
+        const p = ball.position;
+        ball.setPosition(p.x + this.missVelocity.x * f * dt, p.y + this.missVelocity.y * f * dt, p.z);
     }
 
     private onLanded() {
-        this.flying = false;
+        if (!this.flying) return;
+        this.flightTween = null;
+        // Let an item claim the shot before scheduling the miss reset.
         this.node.emit('ball-landed', this.landLocal.clone(), this.power);
-        if (this.autoResetDelay >= 0) this.scheduleOnce(() => this.resetBall(), this.autoResetDelay);
+        if (!this.flying) return;
+        this.flying = false;
+        if (this.missKeepFlying) this.startMissFlight();
+        if (this.autoResetDelay >= 0) this.scheduleOnce(this.resetAfterMiss, this.autoResetDelay);
+    }
+
+    private resetAfterMiss() {
+        this.resetBall();
+        this.node.emit('ball-reset-after-miss');
+    }
+
+    showStoreRetry() {
+        this.shot = true;
+        this.startHint();
+    }
+
+    /** Xác nhận cú sút trúng và ẩn bóng trong lúc chạy kết quả. */
+    consumeImpact(): boolean {
+        if (!this.flying || !this.ball) return false;
+        this.flying = false;
+        this.flightTween?.stop();
+        this.flightTween = null;
+        this.ball.active = false;
+        return true;
     }
 
     /** Đặt bóng về chỗ cũ để sút lại. */
     resetBall() {
+        this.unschedule(this.resetAfterMiss);
+        this.flightTween?.stop();
+        this.flightTween = null;
         const kick = this.ronaldoKick;
         if (kick?.hasPendingShot) kick.cancel();
+        this.missing = false;
         const ball = this.ball;
         if (!ball) return;
         Tween.stopAllByTarget(ball);
         ball.setPosition(this.ballStartPos);
         ball.setScale(this.ballStartScale);
         ball.angle = this.ballStartAngle;
+        ball.active = true;
         this.flying = false;
         this.shot = false;
         this.dragging = false;
