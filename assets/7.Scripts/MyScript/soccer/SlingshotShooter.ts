@@ -109,11 +109,14 @@ export class SlingshotShooter extends Component {
     @property({ tooltip: 'Tự đặt lại bóng sau N giây khi bay xong (-1 = không, chỉ sút 1 lần)' })
     autoResetDelay: number = -1;
 
-    @property({ tooltip: 'Sút hụt: bóng tiếp tục bay ra xa và nhỏ dần cho tới khi replay' })
+    @property({ tooltip: 'Sút hụt: bóng tiếp tục rơi xuống theo đà và nhỏ dần cho tới khi replay' })
     missKeepFlying = true;
 
     @property({ min: 0, step: 0.1, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Tốc độ thu nhỏ khi sút hụt (càng lớn càng nhanh, scale nhân exp(-rate * dt))' })
-    missShrinkRate = 1.5;
+    missShrinkRate = 0.6;
+
+    @property({ min: 0, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Gia tốc rơi khi sút hụt (toạ độ local / giây²)' })
+    missGravity = 2500;
 
     // ------------------------------------------------------------ hint lúc mới vào
     @property({ type: Node, tooltip: 'Điểm rơi đầu trái của hint (con của node này)' })
@@ -133,7 +136,6 @@ export class SlingshotShooter extends Component {
     private flying = false;
     private missing = false;                  // sút hụt: bóng đang bay tiếp ra xa
     private missVelocity = new Vec3();        // vận tốc (local cha của bóng) khi bắt đầu hụt
-    private missScale0 = 1;
     private flightTween: Tween<{ t: number }> | null = null;
     private shot = false;
     private pointerId: number | null = null;   // touch id, -1 = chuột
@@ -403,7 +405,7 @@ export class SlingshotShooter extends Component {
         if (this.missing) this.updateMissFlight(dt);
     }
 
-    /** Sút hụt: bay tiếp theo hướng cuối đường bay, càng xa càng chậm và nhỏ dần. */
+    /** Sút hụt: rơi tiếp theo đà cuối đường bay (có trọng lực) và nhỏ dần. */
     private startMissFlight() {
         const ball = this.ball;
         if (!ball?.parent) return;
@@ -415,8 +417,8 @@ export class SlingshotShooter extends Component {
         };
         const a = toParent(0.95, new Vec3()), b = toParent(1, new Vec3());
         const dt = 0.05 * Math.max(0.01, this.flightTime);
-        this.missVelocity.set((b.x - a.x) / dt, Math.abs(b.y - a.y) / dt, 0); // luôn bay ra xa (lên trên)
-        this.missScale0 = Math.max(1e-4, ball.scale.x);
+        // Giữ nguyên đà cuối đường bay (đang rơi xuống), sau đó trọng lực kéo xuống tiếp
+        this.missVelocity.set((b.x - a.x) / dt, (b.y - a.y) / dt, 0);
         this.missing = true;
     }
 
@@ -425,10 +427,9 @@ export class SlingshotShooter extends Component {
         if (!ball) { this.missing = false; return; }
         const k = Math.exp(-this.missShrinkRate * dt);
         ball.setScale(ball.scale.x * k, ball.scale.y * k, ball.scale.z);
-        // phối cảnh: bóng càng nhỏ (càng xa) thì đi càng chậm
-        const f = ball.scale.x / this.missScale0;
+        this.missVelocity.y -= this.missGravity * dt;
         const p = ball.position;
-        ball.setPosition(p.x + this.missVelocity.x * f * dt, p.y + this.missVelocity.y * f * dt, p.z);
+        ball.setPosition(p.x + this.missVelocity.x * dt, p.y + this.missVelocity.y * dt, p.z);
     }
 
     private onLanded() {

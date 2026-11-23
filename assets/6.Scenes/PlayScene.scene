@@ -15269,6 +15269,9 @@
     "endScale": 0.8,
     "spinSpeed": -720,
     "autoResetDelay": 1,
+    "missKeepFlying": true,
+    "missShrinkRate": 0.6,
+    "missGravity": 2500,
     "pointL": {
       "__id__": 426
     },
@@ -15431,8 +15434,8 @@
       "__uuid__": "0e46cde7-81bc-475f-82da-e76cacb801fe",
       "__expectedType__": "sp.SkeletonData"
     },
-    "defaultSkin": "default",
-    "defaultAnimation": "idle",
+    "defaultSkin": "",
+    "defaultAnimation": "",
     "_premultipliedAlpha": false,
     "_timeScale": 1,
     "_preCacheMode": 0,
