@@ -17,10 +17,13 @@ export enum FxType {
     Lose2 = 7,
     Right = 8,
     Wrong = 9,
+    ItemStolen = 10,
+    ItemReceived = 11,
+    KickBall = 12,
 }
 Enum(FxType);
 
-const FX_TYPE_COUNT = 10;
+const FX_TYPE_COUNT = 13;
 
 /**
  * Cau hinh du lieu am thanh.
@@ -72,6 +75,15 @@ class FxAudio {
 
     @property({ type: SoundData, tooltip: 'wrong.mp3 - Sai' })
     wrong: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'Âm thanh khi đối thủ cướp vật phẩm' })
+    itemStolen: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'Âm thanh khi Ronaldo nhận vật phẩm' })
+    itemReceived: SoundData = new SoundData();
+
+    @property({ type: SoundData, tooltip: 'Âm thanh khi bóng bắt đầu bay' })
+    kickBall: SoundData = new SoundData();
 }
 
 /** Ten truong trong FxAudio theo tung FxType. */
@@ -86,6 +98,9 @@ const FX_FIELDS: Record<FxType, keyof FxAudio> = {
     [FxType.Lose2]: 'lose2',
     [FxType.Right]: 'right',
     [FxType.Wrong]: 'wrong',
+    [FxType.ItemStolen]: 'itemStolen',
+    [FxType.ItemReceived]: 'itemReceived',
+    [FxType.KickBall]: 'kickBall',
 };
 
 /**
