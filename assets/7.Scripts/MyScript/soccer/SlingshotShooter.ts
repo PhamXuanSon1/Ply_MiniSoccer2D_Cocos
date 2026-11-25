@@ -109,14 +109,24 @@ export class SlingshotShooter extends Component {
     @property({ tooltip: 'Tự đặt lại bóng sau N giây khi bay xong (-1 = không, chỉ sút 1 lần)' })
     autoResetDelay: number = -1;
 
-    @property({ tooltip: 'Sút hụt: bóng tiếp tục rơi xuống theo đà và nhỏ dần cho tới khi replay' })
+    @property({ tooltip: 'Sút hụt: bóng bay tiếp theo đà tới điểm Miss End, nhỏ dần rồi dừng ở đó cho tới khi replay' })
     missKeepFlying = true;
+
+    @property({ type: Node, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Điểm X: nơi bóng dừng lại sau khi sút hụt' })
+    missEnd: Node | null = null;
+
+    @property({ visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Bóng sút về bên kia thì lật điểm X sang cùng bên (đối xứng qua giữa sân)' })
+    missMirrorX = true;
+
+    @property({ min: 0.05, step: 0.05, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Thời gian bóng bay từ điểm rơi tới điểm X (giây)' })
+    missFallTime = 0.6;
+
+    @property({ type: Node, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Khi sút hụt, bóng được vẽ phía sau node này (Items)' })
+    missBehind: Node | null = null;
 
     @property({ min: 0, step: 0.1, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Tốc độ thu nhỏ khi sút hụt (càng lớn càng nhanh, scale nhân exp(-rate * dt))' })
     missShrinkRate = 0.6;
 
-    @property({ min: 0, visible(this: SlingshotShooter) { return this.missKeepFlying; }, tooltip: 'Gia tốc rơi khi sút hụt (toạ độ local / giây²)' })
-    missGravity = 2500;
 
     // ------------------------------------------------------------ hint lúc mới vào
     @property({ type: Node, tooltip: 'Điểm rơi đầu trái của hint (con của node này)' })
@@ -135,7 +145,12 @@ export class SlingshotShooter extends Component {
     private dragging = false;
     private flying = false;
     private missing = false;                  // sút hụt: bóng đang bay tiếp ra xa
-    private missVelocity = new Vec3();        // vận tốc (local cha của bóng) khi bắt đầu hụt
+    private missFrom = new Vec3();            // đường bay khi hụt (local cha hiện tại của bóng)
+    private missCtrl = new Vec3();
+    private missTo = new Vec3();
+    private missT = 0;
+    private ballParent: Node | null = null;    // cha + thứ tự gốc của bóng, khôi phục khi replay
+    private ballSibling = 0;
     private flightTween: Tween<{ t: number }> | null = null;
     private shot = false;
     private pointerId: number | null = null;   // touch id, -1 = chuột
@@ -405,20 +420,42 @@ export class SlingshotShooter extends Component {
         if (this.missing) this.updateMissFlight(dt);
     }
 
-    /** Sút hụt: rơi tiếp theo đà cuối đường bay (có trọng lực) và nhỏ dần. */
+    /** Sút hụt: bóng đi ra sau Items, bay tiếp theo đà cuối đường bay tới điểm X rồi dừng. */
     private startMissFlight() {
         const ball = this.ball;
         if (!ball?.parent) return;
-        const parent = ball.parent;
-        const toParent = (t: number, out: Vec3) => {
-            this.pointAt(t, _p);
-            Vec3.transformMat4(_w, _p, this.node.worldMatrix);
-            return parent.inverseTransformPoint(out, _w);
-        };
-        const a = toParent(0.95, new Vec3()), b = toParent(1, new Vec3());
-        const dt = 0.05 * Math.max(0.01, this.flightTime);
-        // Giữ nguyên đà cuối đường bay (đang rơi xuống), sau đó trọng lực kéo xuống tiếp
-        this.missVelocity.set((b.x - a.x) / dt, (b.y - a.y) / dt, 0);
+        // Đà cuối đường bay (world)
+        const a = Vec3.transformMat4(new Vec3(), this.pointAt(0.95, _p), this.node.worldMatrix);
+        const b = Vec3.transformMat4(new Vec3(), this.pointAt(1, _p), this.node.worldMatrix);
+        // Vẽ bóng phía sau Items
+        const behind = this.missBehind;
+        if (behind?.parent && behind.isValid) {
+            this.ballParent = ball.parent;
+            this.ballSibling = ball.getSiblingIndex();
+            ball.setParent(behind.parent, true);
+            ball.setSiblingIndex(behind.getSiblingIndex());
+        }
+        const parent = ball.parent!;
+        parent.inverseTransformPoint(this.missFrom, ball.worldPosition);
+        if (!this.missEnd) {
+            this.missing = false;
+            return;
+        }
+        parent.inverseTransformPoint(this.missTo, this.missEnd.worldPosition);
+        if (this.missMirrorX) {
+            // Đối xứng qua giữa sân (x = 0 của node cha, vd Gameplay) để điểm X luôn nằm trong màn hình
+            const shotSide = Math.sign(this.missFrom.x);
+            const endSide = Math.sign(this.missTo.x);
+            if (shotSide !== 0 && endSide !== 0 && shotSide !== endSide) this.missTo.x = -this.missTo.x;
+        }
+        // Điểm điều khiển nằm trên hướng đà để đường bay nối mượt với parabol
+        const la = parent.inverseTransformPoint(new Vec3(), a), lb = parent.inverseTransformPoint(new Vec3(), b);
+        const dir = lb.subtract(la);
+        const dl = dir.length();
+        if (dl > 1e-3) dir.multiplyScalar(1 / dl); else dir.set(0, -1, 0);
+        const reach = Vec3.distance(this.missFrom, this.missTo) * 0.5;
+        this.missCtrl.set(this.missFrom.x + dir.x * reach, this.missFrom.y + dir.y * reach, this.missFrom.z);
+        this.missT = 0;
         this.missing = true;
     }
 
@@ -427,9 +464,20 @@ export class SlingshotShooter extends Component {
         if (!ball) { this.missing = false; return; }
         const k = Math.exp(-this.missShrinkRate * dt);
         ball.setScale(ball.scale.x * k, ball.scale.y * k, ball.scale.z);
-        this.missVelocity.y -= this.missGravity * dt;
-        const p = ball.position;
-        ball.setPosition(p.x + this.missVelocity.x * dt, p.y + this.missVelocity.y * dt, p.z);
+        this.missT = Math.min(1, this.missT + dt / Math.max(0.05, this.missFallTime));
+        const t = this.missT, u = 1 - t;
+        const A = this.missFrom, C = this.missCtrl, B = this.missTo;
+        ball.setPosition(u * u * A.x + 2 * u * t * C.x + t * t * B.x, u * u * A.y + 2 * u * t * C.y + t * t * B.y, A.z);
+        if (t >= 1) this.missing = false; // tới điểm X: dừng hẳn (không xoay, không nhỏ thêm)
+    }
+
+    /** Trả bóng về cha / thứ tự vẽ gốc. */
+    private restoreBallParent() {
+        const ball = this.ball;
+        if (!ball || !this.ballParent?.isValid) { this.ballParent = null; return; }
+        ball.setParent(this.ballParent, false);
+        ball.setSiblingIndex(this.ballSibling);
+        this.ballParent = null;
     }
 
     private onLanded() {
@@ -474,6 +522,7 @@ export class SlingshotShooter extends Component {
         const ball = this.ball;
         if (!ball) return;
         Tween.stopAllByTarget(ball);
+        this.restoreBallParent();
         ball.setPosition(this.ballStartPos);
         ball.setScale(this.ballStartScale);
         ball.angle = this.ballStartAngle;
